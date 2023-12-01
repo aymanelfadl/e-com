@@ -182,7 +182,7 @@ foreach ($cartResult as $row) {
                 </button>
                 <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
                     data-user-id="<?php echo $userId; ?>" data-price-id="<?php echo $row['PRIX'];?>">
-                <button class="btn btn-link px-2" onclick="updateQuantity(1)">
+                <button class="btn btn-link px-2" onclick="">
                     <i class="fas fa-plus"></i>
                 </button>
             </div>

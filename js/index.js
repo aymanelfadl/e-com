@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var cartCountElement = document.getElementById('cartCount');
     
         // Get the current cart count value
-        var currentCount = parseInt(cartCountElement.innerText);
+        var currentCount = parseFloat(cartCountElement.innerText);
     
         // Increment the count by 1
         var newCount = currentCount + 1;
@@ -13,14 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
         cartCountElement.innerText = newCount;
     
         // Get the current total price
-        var totalPrice = parseFloat(cartPriceElement.innerText.replace(' MAD', ''));
+        var totalPriceText = cartPriceElement.innerText;
+        var currentTotalPrice = parseFloat(totalPriceText.replace(' MAD', ''));
     
-        // Add the price of the selected product
-        totalPrice += productPrice;
+        // Check if currentTotalPrice is a valid number
+        isNaN(currentTotalPrice) ? currentTotalPrice = 0 : currentTotalPrice += productPrice;
     
         // Update the cart price element
-        cartPriceElement.innerText = totalPrice.toFixed(2) + ' MAD';
+        cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
     }
+    
     
     $('.addToCartButton').on('click', function () {
         var productId = $(this).data('product-id');
