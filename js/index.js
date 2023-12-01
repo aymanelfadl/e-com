@@ -59,6 +59,46 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+
+    // Function to handle the quantity update
+    function updateQuantity(userId, productId) {
+        // Make an AJAX request to your server
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "php/update_quantity.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        // Send the data
+        var data = "userId=" + userId + "&productId=" + productId;
+        xhr.send(data);
+
+        // Handle the response from the server
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // The request was successful, you can handle the response here
+                var response = xhr.responseText;
+                console.log(response);  // Log the response to the console or handle it as needed
+
+                // Assuming you want to update the displayed quantity on success
+                if (response === "Quantity updated successfully!") {
+                    var quantityInput = document.getElementById("form1");
+                    quantityInput.value = parseInt(quantityInput.value) + 1;
+                }
+            } else {
+                // Handle errors or other states
+            }
+        };
+    }
+
+    // Attach an event listener to the button
+    var quantityButton = document.getElementById("quantityButtonAdd");
+    quantityButton.addEventListener("click", function () {
+        var userId = this.getAttribute("data-user-id");
+        var productId = this.getAttribute("data-product-id");
+
+        // Call the function to update the quantity
+        updateQuantity(userId, productId);
+    });
     
 
     function performSearch() {

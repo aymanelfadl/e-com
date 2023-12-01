@@ -185,9 +185,10 @@ foreach ($cartResult as $row) {
                 <input id="form1" min="0" name="quantity" value="<?php echo getQuantity($userId, $row['id']); ?>" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
                       data-user-id="<?php echo $userId; ?>" data-price-id="<?php echo $row['PRIX'];?>">
 
-                <button class="btn btn-link px-2" onclick="addQuantity(<?php echo $userId; ?>, <?php echo $row['id']; ?>)">
-                  <i class="fas fa-plus"></i>
-                </button>
+                      <button class="btn btn-link px-2" id="quantityButton" data-product-id="<?php echo $row['id']; ?>" data-user-id="<?php echo $userId; ?>">
+                        <i class="fas fa-plus"></i>
+                      </button>
+
             </div>
         </td>
         <td class="align-middle">

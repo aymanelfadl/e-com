@@ -53,13 +53,35 @@ function getQuantity($userId, $productId) {
 function addQuantity($userId, $productId) {
     $conn = db();
 
-    $selectQuery = "UPDATE TABLE panier SET quantity = quantity + 1 WHERE id_user = ? AND id_product = ?";
-    $stmt = mysqli_prepare($conn, $selectQuery);
-    mysqli_stmt_bind_param($stmt, "ii", $userId, $productId);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $resultQuantity);
+    // Use prepared statement to prevent SQL injection
+    $updateQuery = "UPDATE panier SET quantity = quantity + 1 WHERE id_user = ? AND id_product = ?";
+    $stmt = mysqli_prepare($conn, $updateQuery);
 
+    if (!$stmt) {
+        // Handle the error, for example:
+        die("Error in preparing the statement: " . mysqli_error($conn));
+    }
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "ii", $userId, $productId);
+
+    // Execute the statement
+    $success = mysqli_stmt_execute($stmt);
+
+    // Check for errors
+    if (!$success) {
+        // Handle the error, for example:
+        die("Error in executing the statement: " . mysqli_error($conn));
+    }
+
+    // Close the statement
     mysqli_stmt_close($stmt);
+
+    // Close the database connection
+    mysqli_close($conn);
+
+    // Return true if the update was successful, false otherwise
+    return $success;
 }
 
 
