@@ -42,8 +42,9 @@ $conn = db();
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
         <!-- jQuery -->
-        
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        >
 
         <!-- Bootstrap JS (including Popper.js) -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
@@ -180,10 +181,12 @@ foreach ($cartResult as $row) {
                 <button class="btn btn-link px-2" onclick="updateQuantity(-1)">
                     <i class="fas fa-minus"></i>
                 </button>
-                <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
-                    data-user-id="<?php echo $userId; ?>" data-price-id="<?php echo $row['PRIX'];?>">
-                <button class="btn btn-link px-2" onclick="">
-                    <i class="fas fa-plus"></i>
+
+                <input id="form1" min="0" name="quantity" value="<?php echo getQuantity($userId, $row['id']); ?>" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
+                      data-user-id="<?php echo $userId; ?>" data-price-id="<?php echo $row['PRIX'];?>">
+
+                <button class="btn btn-link px-2" onclick="addQuantity(<?php echo $userId; ?>, <?php echo $row['id']; ?>)">
+                  <i class="fas fa-plus"></i>
                 </button>
             </div>
         </td>

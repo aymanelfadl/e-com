@@ -61,10 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
 
-    
-    
-
-
     function performSearch() {
         var searchTerm = $("#searchInput").val().toLowerCase();
 
