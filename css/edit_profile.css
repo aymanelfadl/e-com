@@ -1,0 +1,57 @@
+body{
+    background-color: rgb(192, 202, 233);
+}
+  
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #3498db;
+  }
+  
+  .profile-button {
+    background: blue;
+    box-shadow: none;
+    border: none;
+  }
+  
+  .profile-button:hover {
+    background: #3498db;
+  }
+  
+  .profile-button:focus {
+    background: #3498db;
+    box-shadow: none;
+  }
+  
+  .profile-button:active {
+    background: #3498db;
+    box-shadow: none;
+  }
+  
+  .back:hover {
+    color: #3498db;
+    cursor: pointer;
+  }
+  #ayman{
+    text-decoration: none;
+    color: black;
+  }
+  #ayman:hover{
+    color: #3498db;
+  }
+  #editProfileSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 1000;
+    display: none;
+}
+
+.mini-page-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

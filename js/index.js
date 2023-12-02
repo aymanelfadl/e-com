@@ -295,3 +295,38 @@ $('#checkoutButton').on('click', function () {
     // Initiate the checkout process
     checkout(userId);
 });
+$("#saveProfileBtn").click(function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+
+    // Get values from input fields
+    var newFirstName = $("input[name='newFirstName']").val();
+    var newLastName = $("input[name='newLastName']").val();
+    var newUsername = $("input[name='newUsername']").val();
+    var newEmail = $("input[name='newEmail']").val();
+    var newPassword = $("input[name='newPassword']").val();
+
+    // Send the data to the server using AJAX
+    $.ajax({
+        url: 'php/edit_profile.php',
+        method: 'POST',
+        data: {
+            newFirstName: newFirstName,
+            newLastName: newLastName,
+            newUsername: newUsername,
+            newEmail: newEmail,
+            newPassword: newPassword
+        },
+        success: function(response) {
+            // Handle the response from the server
+            console.log(response);
+            
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', xhr.responseText);
+            console.error('Status:', status);
+            console.error('Error:', error);
+        }
+        
+    });
+});
