@@ -294,7 +294,7 @@ foreach ($cartResult as $row) {
 
                 </div>
 
-                <button type="button" class="btn btn-primary btn-block btn-lg">
+                <button type="button" class="btn btn-primary btn-block btn-lg" id="checkoutButton" data-user-id="<?php echo $userId ?>">
                   <div class="d-flex justify-content-between">
                     <span>Checkout</span>
                     <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</span>

@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     function updateCart(productPrice, productId) {
-        ;
-        
         var cartPriceElement = document.querySelector('.cart_price');
         var cartCountElement = document.getElementById('cartCount');
     
@@ -14,16 +12,26 @@ document.addEventListener('DOMContentLoaded', function () {
         // Update the cart count element with the new count
         cartCountElement.innerText = newCount;
     
-        // Get the current total price
         var totalPriceText = cartPriceElement.innerText;
-        var currentTotalPrice = parseFloat(totalPriceText.replace(' MAD', ''));
+        var currentTotalPrice = parseFloat(totalPriceText.replace('MAD', ''));
     
-        // Check if currentTotalPrice is a valid number
-        isNaN(currentTotalPrice) ? currentTotalPrice = 0 : currentTotalPrice += productPrice;
+        if (isNaN(currentTotalPrice)) {
+            currentTotalPrice = 0;
+        }
+    
+        // If the product is not in the cart, set the price to the initial product price
+        if (!localStorage.getItem(productId)) {
+            currentTotalPrice += productPrice;
+            localStorage.setItem(productId, productPrice.toString());
+        } else {
+            // If the product is already in the cart, add the price to the existing total
+            currentTotalPrice += parseFloat(localStorage.getItem(productId));
+        }
     
         // Update the cart price element
         cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
     }
+    
     
     
     $('.addToCartButton').on('click', function () {
@@ -261,3 +269,29 @@ function updateSubtotal() {
     });
 }
 
+
+function checkout(userId) {
+    // Example: Sending a POST request to checkout.php
+    $.ajax({
+        url: 'php/checkout.php',
+        method: 'POST',
+        data: { user_id: userId },
+        success: function (response) {
+            console.log('Checkout successful:', response);
+            // Handle success, e.g., show a success message to 
+            var cartCountElement = document.getElementById('cartCount');
+            cartCountElement.innerText = '0';
+        },
+        error: function (error) {
+            console.error('Error during checkout:', error);
+            // Handle error, e.g., show an error message to the user
+        }
+    });
+}
+$('#checkoutButton').on('click', function () {
+    // Replace with your logic to get the user ID
+    var userId = $(this).data('user-id') ;
+
+    // Initiate the checkout process
+    checkout(userId);
+});
