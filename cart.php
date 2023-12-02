@@ -126,8 +126,7 @@ $conn = db();
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
-"),2) ?></span> MAD</div>
+                       
                       </div>
                     </div>
                   </div>
@@ -195,7 +194,7 @@ foreach ($cartResult as $row) {
         <td class="align-middle">
             <p class="mb-0" style="font-weight: 500;"><?php echo $row['PRIX']; ?> MAD</p>
         </td>
-    </tr>
+      </tr>
 <?php } ?>
 
             </tbody>
