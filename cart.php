@@ -12,12 +12,13 @@ if (isset($_SESSION['username'])) {
 }
 
 // Retrieve user ID from the database
-$userQuery = "SELECT id FROM users WHERE FN = '$username'";
+$userQuery = "SELECT id, EMAIL FROM users WHERE FN = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
 if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
+    $email = $userRow['EMAIL'];
 } else {
     // Handle the case where the user ID is not found
     echo "Error: User ID not found";
@@ -173,10 +174,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div class="row">
         <div class="col-md-4 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                <img class="rounded-circle mt-5" src="https://i.imgur.com/0eg0aG0.jpg" width="90">
-                <span class="font-weight-bold">John Doe</span>
-                <span class="text-black-50">john_doe12@bbb.com</span>
-                <span>United States</span>
+            <div class="circle">
+              <i class="fa-regular fa-user"></i>
+            </div>
+                <span class="font-weight-bold" style="margin-top: 15px;" ><h5><?php echo $username ?></h5></span>
+                <span class="text-black-50" style="margin-top: 15px;"><h6><?php echo $email ?></h6></span>
             </div>
         </div>
         <div class="col-md-8">

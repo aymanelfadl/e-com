@@ -5,13 +5,13 @@
   }
   
   .profile-button {
-    background: blue;
+    background: #3498db;
     box-shadow: none;
     border: none;
   }
   
   .profile-button:hover {
-    background: #3498db;
+    background: #085c94;
   }
   
   .profile-button:focus {
@@ -37,13 +37,14 @@
   }
   #editProfileSection {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: royalblue;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; /* Adjust the width to your preference */
+    max-width: 800px; /* Set a maximum width if needed */
     z-index: 1000;
     display: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a box shadow with your desired values */
 }
 
 .mini-page-content {
@@ -51,4 +52,22 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+.circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background-color: #3498db; /* Set the background color for the circle */
+  border-radius: 50%; /* Make it a circle with border-radius */
+}
+
+.circle i {
+  font-size: 24px; /* Adjust the icon size as needed */
+  color: white; /* Set the icon color */
+}
+
+.user-info {
+  margin-left: 20px; /* Adjust the margin as needed */
 }
