@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     function updateCart(productPrice, productId) {
+        console.log(productPrice);
+        console.log(productId);
+        
         var cartPriceElement = document.querySelector('.cart_price');
         var cartCountElement = document.getElementById('cartCount');
     
@@ -59,47 +62,64 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+// Function to decrement quantity
+function decrementQuantity(productId) {
+    updateQuantity(productId, -1);
+}
 
+// Function to increment quantity
+function incrementQuantity(productId) {
+    updateQuantity(productId, 1);
+}
 
-    // Function to handle the quantity update
-    function updateQuantity(userId, productId) {
-        // Make an AJAX request to your server
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "php/update_quantity.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// Function to update the quantity on the server and in the UI
+function updateQuantity(productId, change) {
+    var userId = document.querySelector('.form-control[data-product-id="' + productId + '"]').getAttribute('data-user-id');
+    console.log(userId);
+    console.log(productId);
+    var quantityInput = document.querySelector('.form-control[data-product-id="' + productId + '"]');
+    var currentQuantity = parseInt(quantityInput.value);
 
-        // Send the data
-        var data = "userId=" + userId + "&productId=" + productId;
-        xhr.send(data);
+    // Check if the new quantity is valid (greater than 0 for decrement)
+    if (currentQuantity + change >= 0) {
+        // Update the quantity in the UI
+        quantityInput.value = currentQuantity + change;
 
-        // Handle the response from the server
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // The request was successful, you can handle the response here
-                var response = xhr.responseText;
-                console.log(response);  // Log the response to the console or handle it as needed
-
-                // Assuming you want to update the displayed quantity on success
-                if (response === "Quantity updated successfully!") {
-                    var quantityInput = document.getElementById("form1");
-                    quantityInput.value = parseInt(quantityInput.value) + 1;
-                }
-            } else {
-                // Handle errors or other states
-            }
-        };
+        // Send an AJAX request to update the quantity in the database
+        $.post("php/update_quantity.php", {
+            userId: userId,
+            productId: productId,
+            decrement: (change === -1).toString()
+        }, function (response) {
+            console.log(response);
+            // You can handle the response here if needed
+        });
     }
+}
 
-    // Attach an event listener to the button
-    var quantityButton = document.getElementById("quantityButtonAdd");
-    quantityButton.addEventListener("click", function () {
-        var userId = this.getAttribute("data-user-id");
-        var productId = this.getAttribute("data-product-id");
+// Assuming you have a similar structure for your quantity buttons as in your cart.php
+var quantityMinusButtons = document.querySelectorAll('.fa-minus');
+var quantityPlusButtons = document.querySelectorAll('.fa-plus');
 
-        // Call the function to update the quantity
-        updateQuantity(userId, productId);
+// Add click event listeners to decrement quantity
+quantityMinusButtons.forEach(function (minusButton) {
+    minusButton.addEventListener('click', function () {
+        var productId = minusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
+        decrementQuantity(productId);
     });
-    
+});
+
+// Add click event listeners to increment quantity
+quantityPlusButtons.forEach(function (plusButton) {
+    plusButton.addEventListener('click', function () {
+        var productId = plusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
+        incrementQuantity(productId);
+    });
+});
+
+
+
+
 
     function performSearch() {
         var searchTerm = $("#searchInput").val().toLowerCase();

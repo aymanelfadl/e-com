@@ -1,14 +1,21 @@
 <?php
 
 include "./config.php";
+
 $conn = db();
+
 // Check if the request is a POST request
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Get user and product IDs from the POST data
     $userId = $_POST["userId"];
     $productId = $_POST["productId"];
+    $decrement = isset($_POST["decrement"]) && $_POST["decrement"] === "true";
 
-    $updateQuery = "UPDATE panier SET quantity = quantity + 1 WHERE id_user = ? AND id_product = ?";
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    $updateQuery = "UPDATE panier SET quantity = quantity " . ($decrement ? "- 1" : "+ 1") . " WHERE id_user = ? AND id_product = ?";
     $stmt = mysqli_prepare($conn, $updateQuery);
 
     if ($stmt) {
