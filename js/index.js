@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     function updateCart(productPrice, productId) {
-        console.log(productPrice);
-        console.log(productId);
+        ;
         
         var cartPriceElement = document.querySelector('.cart_price');
         var cartCountElement = document.getElementById('cartCount');
@@ -29,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     $('.addToCartButton').on('click', function () {
         var productId = $(this).data('product-id');
+        console.log(productId);
         var userId = $(this).data('user-id'); // You need to obtain the user ID
     
         // Send the data to the server for insertion into the 'panier' table
@@ -70,6 +70,7 @@ function decrementQuantity(productId) {
 // Function to increment quantity
 function incrementQuantity(productId) {
     updateQuantity(productId, 1);
+
 }
 
 // Function to update the quantity on the server and in the UI
@@ -106,6 +107,7 @@ quantityMinusButtons.forEach(function (minusButton) {
     minusButton.addEventListener('click', function () {
         var productId = minusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
         decrementQuantity(productId);
+        updateSubtotal()
     });
 });
 
@@ -114,6 +116,7 @@ quantityPlusButtons.forEach(function (plusButton) {
     plusButton.addEventListener('click', function () {
         var productId = plusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
         incrementQuantity(productId);
+        updateSubtotal()
     });
 });
 
@@ -238,3 +241,23 @@ quantityPlusButtons.forEach(function (plusButton) {
     // Initialize by displaying all products
     displayAllProducts();
 });
+
+
+function updateSubtotal() {
+    // Send an AJAX request to get the updated subtotal from the server
+    $.ajax({
+        url: 'php/get_subtotal.php',
+        method: 'POST', // or 'POST', depending on your server-side script
+        success: function (response) {
+            // Assuming the response is the updated subtotal value
+            var subtotal = parseFloat(response);
+            $('#totalValue').text(response );
+            $('#totalTax').text(response);
+            $('#subtotalValue').text(subtotal.toFixed(2) + ' MAD');
+        },
+        error: function (error) {
+            console.error('Error updating subtotal:', error);
+        }
+    });
+}
+

@@ -17,7 +17,7 @@ $conn = db();
   } else {
     // Handle the case where the user ID is not found
     echo "Error: User ID not found";
-    exit();
+
   }
 
 
@@ -44,7 +44,7 @@ $conn = db();
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        >
+        
 
         <!-- Bootstrap JS (including Popper.js) -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
@@ -74,9 +74,11 @@ $conn = db();
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918597/mail.png" alt=""></div><a href="mailto:ProFitFuel@gmail.com">ProFitFuel@gamil.com</a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
+              <?php if($username==0){ ?>
 								<div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
 								<div><a href="#">Register</a></div>
 								<div><a href="#">Sign in</a></div>
+                <?php } ?>
 							</div>
 						</div>
 					</div>
@@ -194,9 +196,7 @@ foreach ($cartResult as $row) {
             <p class="mb-0" style="font-weight: 500;"><?php echo $row['PRIX']; ?> MAD</p>
         </td>
     </tr>
-<?php
-}
-?>
+<?php } ?>
 
             </tbody>
           </table>
@@ -278,7 +278,7 @@ foreach ($cartResult as $row) {
               <div class="col-lg-4 col-xl-3">
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
-                  <p class="mb-2"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+                  <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
 "),2) . "MAD"?></p>
                 </div>
 
@@ -291,14 +291,14 @@ foreach ($cartResult as $row) {
 
                 <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
                   <p class="mb-2">Total (tax included)</p>
-                  <p class="mb-2"><?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</p>
+                  <p class="mb-2" id="totalTax" ><?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</p>
 
                 </div>
 
                 <button type="button" class="btn btn-primary btn-block btn-lg">
                   <div class="d-flex justify-content-between">
                     <span>Checkout</span>
-                    <span style="margin-left: 8px;"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</span>
+                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</span>
                   </div>
                 </button>
 
