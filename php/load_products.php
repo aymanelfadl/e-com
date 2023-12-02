@@ -27,17 +27,20 @@ if ($result && mysqli_num_rows($result) > 0) {
         // Display each product in a table cell
         ?>
    <td>
+   <a href="product_page.php?id=<?php echo $row['id']; ?>">
     <div class="card" data-price="<?php echo $row['PRIX']; ?>" data-product-id="<?php echo $row['id']?>">
         <img src="../product_images/<?php echo $row['image_file']; ?>" alt="<?php echo $row['image_file']; ?>" style="width:100%">
         <h2><?php echo $row['title']; ?></h2>
         <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
         <p><?php echo $row['DESCREPTION']; ?></p>
+        </a>
         <p>
             <button class="addToCartButton" 
                     data-product-id="<?php echo $row['id']; ?>"
                     data-user-id="<?php echo $userId; ?>">Add to Cart</button>
         </p>
     </div>
+   
 </td>
 
         <?php
