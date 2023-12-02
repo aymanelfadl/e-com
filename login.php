@@ -131,35 +131,19 @@ $conn=db();
                 </label>
               </div>
               <div class="d-grid">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" style="width: 340px;">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit" style="width: 340px;margin-bottom:15px">
                   Sign in
                 </button>
               </div>
+                <a href="signup.php">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" style="width: 340px;"> Sign up </button>
+                </a>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-    <!-- <div>
-    <form action="login.php" method="POST">
-
-<h1>Login</h1>
-<div class="content">
-  
-  <div class="input-field">
-    <input type="text" placeholder="Username" autocomplete="nope" name="username">
-  </div>
-  <div class="input-field">
-    <input  name="password"  type="password" placeholder="Password" autocomplete="new-password">
-  </div>
-  <a href="#" class="link">Forgot Your Password?</a>
-</div>
-<div class="action">
-  <button class="btn" type="submit">Log in</button>
-
-</div> -->
 </form>
         
  
