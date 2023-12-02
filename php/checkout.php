@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Return a response (optional)
     echo json_encode(['message' => 'Checkout successful']);
+
 } else {
     // Handle invalid requests
     http_response_code(400);

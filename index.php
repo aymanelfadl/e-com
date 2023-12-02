@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
 
           <link rel="stylesheet" href="css/index.css">
+          <link rel="stylesheet" href="css/edit_profile.css">
 
           <script src="js/index.js" defer></script>
           
@@ -198,7 +199,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                               </div>
       </nav>
           <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
-    
+          <div id="successMessage" style="background: #4CAF50;color: white; padding: 10px; border-radius: 5px; width:100%; height:40px;display: none;">
+                  <h6 style="text-align: center;">Your order was sent successfully!</h6>
+          </div>
+
     </header>
     <!-- ======================================================================= -->  
     <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
@@ -223,23 +227,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                     <h6 class="text-right">Edit Profile</h6>
                 </div>
                 <!-- Add form tag with id, method, and action -->
-                <form id="editProfileForm" method="post" action="update_profile.php">
-                    <div class="row mt-2">
-                        <div class="col-md-6"><input type="text" name="newFirstName" class="form-control" placeholder="New first name" value=""></div>
-                        <div class="col-md-6"><input type="text" name="newLastName" class="form-control" placeholder="New last name" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6"><input type="text" name="newUsername" class="form-control" placeholder="New user name" value=""></div>
-                        <div class="col-md-6"><input type="text" name="newEmail" class="form-control" placeholder="Email" value=""></div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-6"><input type="text" name="newPassword" class="form-control" placeholder="New user password" value=""></div>
-                    </div>
+                <form id="editProfileForm" method="POST" action="./php/edit_profile.php">
+          <div class="row mt-2">
+        <div class="col-md-6">
+            <input type="text" name="newFirstName" class="form-control" placeholder="Enter new first name" value="">
+        </div>
+        <div class="col-md-6">
+            <input type="text" name="newLastName" class="form-control" placeholder="Enter new last name" value="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
 
-                    <div class="mt-5 text-right">
-                        <button id="saveProfileBtn" class="btn btn-primary profile-button" type="submit" name="saveProfile">Save Profile</button>
-                    </div>
-                </form>
+            <input type="text" name="newUsername" class="form-control" placeholder="Enter new username" value="">
+        </div>
+        <div class="col-md-6">
+
+            <input type="text" name="newEmail" class="form-control" placeholder="Enter new email" value="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <input type="password" name="newPassword" class="form-control" placeholder="Enter new password" value="">
+        </div>
+        <div class="col-md-6">
+            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm new password" value="">
+        </div>
+    </div>
+    
+    <div class="mt-5 text-right">
+    <button id="saveProfileBtn" class="btn btn-primary profile-button" type="submit" name="saveProfile">Save Profile</button>
+    </div>
+</form>
+
             </div>
         </div>
     </div>

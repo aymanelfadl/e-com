@@ -1,29 +1,42 @@
-
  
- <?php 
- require "./php/config.php";
-    session_start(); 
+<?php
+require "./php/config.php";
+session_start();
 $conn = db();
-  if(isset( $_SESSION['username'])){
-    $username= $_SESSION['username'];}
-  else{ $username=0;}
 
-  $userQuery = "SELECT id FROM users WHERE FN = '$username'";
-  $userResult = mysqli_query($conn, $userQuery);
+// Check if the user is logged in
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+} else {
+    $username = 0;
+}
 
-  if ($userResult && mysqli_num_rows($userResult) > 0) {
+// Retrieve user ID from the database
+$userQuery = "SELECT id FROM users WHERE FN = '$username'";
+$userResult = mysqli_query($conn, $userQuery);
+
+if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
-  } else {
+} else {
     // Handle the case where the user ID is not found
     echo "Error: User ID not found";
+    exit();
+}
 
-  }
+// Handle logout if the form is submitted
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+    // Destroy the session
+    session_destroy();
+
+    // Optionally, redirect the user to another page after logout
+    header("Location: login.php"); // Change "index.php" to the desired page
+    exit();
+}
 
 
 
-
- ?>
+?>
 
 
 <!DOCTYPE html>
@@ -52,8 +65,9 @@ $conn = db();
 
         <link rel="stylesheet" href="css/index.css">
 
-        <script src="js/index.js" defer></script>
+        <link rel="stylesheet" href="css/edit_profile.css">
         
+        <script src="js/index.js" defer></script>        
 
 </head>
 <body>
@@ -74,11 +88,25 @@ $conn = db();
 						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918597/mail.png" alt=""></div><a href="mailto:ProFitFuel@gmail.com">ProFitFuel@gamil.com</a></div>
 						<div class="top_bar_content ml-auto">
 							<div class="top_bar_user">
-              <?php if($username==0){ ?>
-								<div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
-								<div><a href="#">Register</a></div>
-								<div><a href="#">Sign in</a></div>
-                <?php } ?>
+              <?php if($username == 0) { ?>
+    <div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
+    <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
+    <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
+<?php } else { ?>
+    <div style="display: inline-block;">
+       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">Edit Profile</button>
+    </div>
+    <form method="post" style="display: inline-block;">
+        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">Log-Out</button>
+    </form>
+    <script>
+    document.getElementById('editProfileBtn').addEventListener('click', function() {
+        var editProfileSection = document.getElementById('editProfileSection');
+        editProfileSection.style.display = 'block';
+    });
+</script>
+
+<?php } ?>
 							</div>
 						</div>
 					</div>
@@ -141,6 +169,65 @@ $conn = db();
 	
   </header>
   <body>
+  <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                <img class="rounded-circle mt-5" src="https://i.imgur.com/0eg0aG0.jpg" width="90">
+                <span class="font-weight-bold">John Doe</span>
+                <span class="text-black-50">john_doe12@bbb.com</span>
+                <span>United States</span>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-row align-items-center back">
+                        <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                        <a href="index.php" id="ayman">
+                            <h6>Back to home</h6>
+                        </a>
+                    </div>
+                    <h6 class="text-right">Edit Profile</h6>
+                </div>
+                <!-- Add form tag with id, method, and action -->
+                <form id="editProfileForm" method="POST" action="./php/edit_profile.php">
+          <div class="row mt-2">
+        <div class="col-md-6">
+            <input type="text" name="newFirstName" class="form-control" placeholder="Enter new first name" value="">
+        </div>
+        <div class="col-md-6">
+            <input type="text" name="newLastName" class="form-control" placeholder="Enter new last name" value="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+
+            <input type="text" name="newUsername" class="form-control" placeholder="Enter new username" value="">
+        </div>
+        <div class="col-md-6">
+
+            <input type="text" name="newEmail" class="form-control" placeholder="Enter new email" value="">
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <input type="password" name="newPassword" class="form-control" placeholder="Enter new password" value="">
+        </div>
+        <div class="col-md-6">
+            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm new password" value="">
+        </div>
+    </div>
+    
+    <div class="mt-5 text-right">
+    <button id="saveProfileBtn" class="btn btn-primary profile-button" type="submit" name="saveProfile">Save Profile</button>
+    </div>
+</form>
+
+            </div>
+        </div>
+    </div>
+</div>
   
 
   

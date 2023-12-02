@@ -278,9 +278,16 @@ function checkout(userId) {
         data: { user_id: userId },
         success: function (response) {
             console.log('Checkout successful:', response);
-            // Handle success, e.g., show a success message to 
+            
+            // Handle success, e.g., show a success message
             var cartCountElement = document.getElementById('cartCount');
             cartCountElement.innerText = '0';
+
+            // Set a flag in localStorage to indicate successful checkout
+            localStorage.setItem('checkoutSuccess', 'true');
+
+            // Redirect to index.php after successful checkout
+            window.location.href = 'index.php';
         },
         error: function (error) {
             console.error('Error during checkout:', error);
@@ -288,15 +295,28 @@ function checkout(userId) {
         }
     });
 }
+
+// Check for the checkout success flag on page load
+document.addEventListener('DOMContentLoaded', function () {
+    var checkoutSuccess = localStorage.getItem('checkoutSuccess');
+
+    if (checkoutSuccess === 'true') {
+        // Show the success message
+        showSuccessMessage();
+
+        // Clear the flag to avoid showing the message on subsequent page loads
+        localStorage.removeItem('checkoutSuccess');
+    }
+});
+
 $('#checkoutButton').on('click', function () {
     // Replace with your logic to get the user ID
-    var userId = $(this).data('user-id') ;
-
-    // Initiate the checkout process
+    var userId = $(this).data('user-id');
     checkout(userId);
 });
+
 $("#saveProfileBtn").click(function(event) {
-    // Prevent the default form submission behavior
+    // Prevent default form submission
     event.preventDefault();
 
     // Get values from input fields
@@ -305,6 +325,12 @@ $("#saveProfileBtn").click(function(event) {
     var newUsername = $("input[name='newUsername']").val();
     var newEmail = $("input[name='newEmail']").val();
     var newPassword = $("input[name='newPassword']").val();
+
+    // Client-side validation (you can add more validation as needed)
+    if (!newFirstName || !newLastName || !newUsername || !newEmail || !newPassword) {
+        alert("Please fill out all required fields.");
+        return;
+    }
 
     // Send the data to the server using AJAX
     $.ajax({
@@ -321,12 +347,29 @@ $("#saveProfileBtn").click(function(event) {
             // Handle the response from the server
             console.log(response);
             
+            // Example: Redirect to a new page if the update was successful
+            if (response === "Profile updated successfully!") {
+                window.location.href = 'index.php';
+            } else {
+                // Handle other responses or update the UI accordingly
+                alert("Profile update failed. Please try again.");
+            }
         },
         error: function(xhr, status, error) {
             console.error('AJAX Error:', xhr.responseText);
             console.error('Status:', status);
             console.error('Error:', error);
         }
-        
     });
 });
+
+// Toggle the visibility of the success message
+function showSuccessMessage() {
+    var successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+
+    setTimeout(function () {
+        // Hide the success message after 3 seconds
+        successMessage.style.display = 'none';
+    }, 3000);
+}

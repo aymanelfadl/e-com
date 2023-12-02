@@ -1,7 +1,4 @@
-body{
-    background-color: rgb(192, 202, 233);
-}
-  
+
   .form-control:focus {
     box-shadow: none;
     border-color: #3498db;
@@ -43,8 +40,8 @@ body{
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.95);
+    height: 50%;
+    background: royalblue;
     z-index: 1000;
     display: none;
 }

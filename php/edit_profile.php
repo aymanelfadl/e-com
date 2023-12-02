@@ -1,16 +1,18 @@
-<?php 
-require "config.php";
+<?php
+// Include the necessary configuration and database connection files
+include "config.php";
 session_start();
 $conn = db();
 
 // Check if the user is logged in
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-} else {
-    $username = 0;
+if (!isset($_SESSION['username'])) {
+    // Handle the case where the user is not logged in
+    echo "Error: User not logged in";
+    exit();
 }
 
 // Retrieve user ID from the database
+$username = $_SESSION['username'];
 $userQuery = "SELECT id FROM users WHERE FN = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
@@ -23,7 +25,9 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     exit();
 }
 
-    // Get new information from the form
+// Check if the form was submitted
+
+    // Retrieve form data
     $newFirstName = mysqli_real_escape_string($conn, $_POST['newFirstName']);
     $newLastName = mysqli_real_escape_string($conn, $_POST['newLastName']);
     $newUsername = mysqli_real_escape_string($conn, $_POST['newUsername']);
@@ -35,16 +39,14 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $updateResult = mysqli_query($conn, $updateQuery);
 
     if ($updateResult) {
-        // Update successful
+        $_SESSION['username'] = $newUsername;
+
         echo "Profile updated successfully!";
-        header("Location: index.php");
+        // You can redirect the user to another page if needed
+        // header("Location: index.php");
     } else {
         // Handle the case where the update fails
         echo "Error updating profile: " . mysqli_error($conn);
     }
-
-
-
-
 
 ?>
