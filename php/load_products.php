@@ -2,7 +2,11 @@
 
 
 // Assuming you have the username stored in the session
-$username = isset($_SESSION['username'])?  $_SESSION['username'] : 0;
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+} else {
+    $username = 0;
+}
 
 // Retrieve the user ID based on the username
 $userQuery = "SELECT id FROM users WHERE FN = '$username'";
@@ -25,16 +29,16 @@ if ($result && mysqli_num_rows($result) > 0) {
    <td>
    <a href="product_page.php?id=<?php echo $row['id']; ?>">
     <div class="card" data-price="<?php echo $row['PRIX']; ?>" data-product-id="<?php echo $row['id']?>">
-        <img src="../product_images/<?php echo $row['image_file']; ?>" alt="<?php echo $row['image_file']; ?>" style="width:100%">
+        <img src="./product_images/<?php echo $row['image_file']; ?>" alt="<?php echo $row['image_file']; ?>" style="width:100%">
         <h2><?php echo $row['title']; ?></h2>
         <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
         <p><?php echo $row['DESCREPTION']; ?></p>
         </a>
         <p>
     <button class="addToCartButton"
-    <?php if ($username == 0) { echo 'onclick="showSignUpMessage();"'; } ?>
             data-product-id="<?php echo $row['id']; ?>"
             data-user-id="<?php echo $userId; ?>"
+    <?php if ($username == 0) { echo 'onclick="showSignUpMessage();"'; } ?>
             >
         Add to Cart
     </button>   

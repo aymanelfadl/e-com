@@ -12,7 +12,7 @@ if (isset($_SESSION['username'])) {
 }
 
 // Retrieve user ID from the database
-$userQuery = "SELECT id, EMAIL FROM users WHERE FN = '$username'";
+$userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
 if ($userResult && mysqli_num_rows($userResult) > 0) {

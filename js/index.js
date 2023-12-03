@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var productId = $(this).data('product-id');
         console.log(productId);
         var userId = $(this).data('user-id'); // You need to obtain the user ID
-    
+        console.log(userId);
         // Send the data to the server for insertion into the 'panier' table
         $.ajax({
             url: 'php/update_cart.php',
@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function attachAddToCartListeners() {
         var addToCartButtons = document.querySelectorAll('.addToCartButton');
+        var buyNowButtons = document.querySelectorAll('.buyNowButton');
     
         // Add a click event listener to each "Add to Cart" button
         addToCartButtons.forEach(function (button) {
@@ -64,12 +65,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Get the price and product ID associated with the product
                 var productPrice = parseFloat(button.closest('.card').getAttribute('data-price'));
                 var productId = button.closest('.card').getAttribute('data-product-id');
-    
                 // Call the updateCart function with product ID
                 updateCart(productPrice, productId);
             });
         });
+
+
+        var buyNowButtons = document.querySelectorAll('.buyNowButton');
+    // Add a click event listener to each "Buy Now" button
+        buyNowButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Get the product ID and user ID associated with the button
+                var productId = parseFloat(button.getAttribute('data-product-id'));
+                var productPrice = parseFloat(button.getAttribute('data-price'));
+
+                // Call the updateCart function with product ID and user ID
+                updateCart(productPrice, productId);
+           });
+        
+        });
     }
+    $('.buyNowButton').on('click', function () {
+        var productId = $(this).data('product-id');
+        console.log(productId);
+        var userId = $(this).data('user-id'); // You need to obtain the user ID
+        console.log(userId);
+        // Send the data to the server for insertion into the 'panier' table
+        $.ajax({
+            url: 'php/update_cart.php',
+            method: 'POST',
+            data: { user_id: userId, product_id: productId, quantity: 1 },
+            success: function () {
+                console.log('Product added to cart successfully');
+                // You can handle additional actions or UI updates here
+            },
+            error: function (error) {
+                console.error('Error adding product to cart:', error);
+            }
+        });
+    });
 // Function to decrement quantity
 function decrementQuantity(productId) {
     updateQuantity(productId, -1);
