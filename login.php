@@ -135,10 +135,10 @@ $conn=db();
                   Sign in
                 </button>
               </div>
-                <a href="signup.php">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold" style="width: 340px;"> Sign up </button>
-                </a>
             </form>
+            <a href="signup.php">
+    <button class="btn btn-primary btn-login text-uppercase fw-bold" style="width: 340px;"> Sign up </button>
+</a>
           </div>
         </div>
       </div>

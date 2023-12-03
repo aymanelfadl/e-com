@@ -2,7 +2,7 @@
 
 
 // Assuming you have the username stored in the session
-$username = $_SESSION['username'];
+$username = isset($_SESSION['username'])?  $_SESSION['username'] : 0;
 
 // Retrieve the user ID based on the username
 $userQuery = "SELECT id FROM users WHERE FN = '$username'";
@@ -11,10 +11,6 @@ $userResult = mysqli_query(db(), $userQuery);
 if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
-} else {
-    // Handle the case where the user ID is not found
-    echo "Error: User ID not found";
-    exit();
 }
 
 
@@ -35,12 +31,15 @@ if ($result && mysqli_num_rows($result) > 0) {
         <p><?php echo $row['DESCREPTION']; ?></p>
         </a>
         <p>
-            <button class="addToCartButton" 
-                    data-product-id="<?php echo $row['id']; ?>"
-                    data-user-id="<?php echo $userId; ?>">Add to Cart</button>
+    <button class="addToCartButton"
+    <?php if ($username == 0) { echo 'onclick="showSignUpMessage();"'; } ?>
+            data-product-id="<?php echo $row['id']; ?>"
+            data-user-id="<?php echo $userId; ?>"
+            >
+        Add to Cart
+    </button>   
         </p>
     </div>
-   
 </td>
 
         <?php
@@ -54,5 +53,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 } else {
     echo "<td colspan='4'>No products found</td>";
 }
+
 ?>
+
 

@@ -193,11 +193,13 @@ quantityPlusButtons.forEach(function (plusButton) {
 
             $searchResults.append(
                 '<td>' +
+                '<a href="product_page.php?id='+ products.id +'">'+
                 '<div class="card" data-price="' + products.PRIX + '">' +
                 '<img src="../product_image/    ' + products.image_file + '" alt="' + products.image_file + '" style="width:100%">' +
                 '<h2>' + products.title + '</h2>' +
                 '<p class="Price"><b>' + products.PRIX + ' MAD</b></p>' +
                 '<p>' + products.DESCREPTION + '</p>' +
+                '</a>'+
                 '<p><button class="addToCartButton">Add to Cart</button></p>' +
                 '</div>' +
                 '</td>'
@@ -372,4 +374,18 @@ function showSuccessMessage() {
         // Hide the success message after 3 seconds
         successMessage.style.display = 'none';
     }, 3000);
+}
+function showSignUpMessage() {
+    var signupAlert = document.getElementById('signupAlert');
+    signupAlert.style.display = 'block';
+
+    // Hide the alert after 1 second
+    setTimeout(function () {
+        hideSignUpMessage();
+    }, 1000);
+}
+
+function hideSignUpMessage() {
+    var signupAlert = document.getElementById('signupAlert');
+    signupAlert.style.display = 'none';
 }

@@ -19,10 +19,6 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
     $email = $userRow['EMAIL'];
-} else {
-    // Handle the case where the user ID is not found
-    echo "Error: User ID not found";
-    exit();
 }
 
 // Handle logout if the form is submitted
@@ -96,10 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
     <div style="display: inline-block;">
-       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">Edit Profile</button>
+       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
+       <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>Edit Profile
+      </button>
     </div>
     <form method="post" style="display: inline-block;">
-        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">Log-Out</button>
+        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
+        <i class="fa-solid fa-arrow-right-from-bracket" ></i>
+      </button>
     </form>
     <script>
     document.getElementById('editProfileBtn').addEventListener('click', function() {
@@ -203,7 +203,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           <div id="successMessage" style="background: #4CAF50;color: white; padding: 10px; border-radius: 5px; width:100%; height:40px;display: none;">
                   <h6 style="text-align: center;">Your order was sent successfully!</h6>
           </div>
-
+          <?php if ($username == 0): ?>
+        <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
+            This is a warning alert—check it out! You need to sign up to add items to your cart. Please <b>sign up first.</b>
+        </div>
+    <?php endif; ?>
     </header>
     <!-- ======================================================================= -->  
     <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
