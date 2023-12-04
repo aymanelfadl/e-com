@@ -1099,5 +1099,7 @@ select option
   .card button:hover {
     opacity: 0.7;
   }
-
+  a:hover .card {
+    background-color: #000; /* Change this to the desired border color */
+  }
 

@@ -194,7 +194,7 @@ editProfileSection.style.display = 'block';
 
 
 <!-- =============================================================================================================== -->
-<div class="container my-5">
+<div class="container my-5" style="box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);padding:20px;">
             <div class="row">
                 <div class="col-md-5">
                     <div class="main-img">
@@ -203,8 +203,8 @@ editProfileSection.style.display = 'block';
                 </div>
                 <div class="col-md-7">
                     <div class="main-description px-2">
-                        <div class="category text-bold">
-                          <b>  Category: </b> <?php echo $product['category_name']; ?>
+                        <div class="category text-bold" style="margin-top: 10px;">
+                          <b>  Category: </b> <p><?php echo $product['category_name']; ?></p>
                         </div>
                         <div class="product-title text-bold my-3">
                             <h2><?php echo $product['title']; ?></h2>

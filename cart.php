@@ -94,11 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
-    <div style="display: inline-block;">
-       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">Edit Profile</button>
+  <div style="display: inline-block;">
+       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
+       <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>Edit Profile
+      </button>
     </div>
     <form method="post" style="display: inline-block;">
-        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">Log-Out</button>
+        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
+        <i class="fa-solid fa-arrow-right-from-bracket" ></i>
+      </button>
     </form>
     <script>
     document.getElementById('editProfileBtn').addEventListener('click', function() {

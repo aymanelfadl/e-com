@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(productId);
         var userId = $(this).data('user-id'); // You need to obtain the user ID
         console.log(userId);
-        // Send the data to the server for insertion into the 'panier' table
         $.ajax({
             url: 'php/update_cart.php',
             method: 'POST',
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Error adding product to cart:', error);
             }
         });
-    });
+    });        
     
     function attachAddToCartListeners() {
         var addToCartButtons = document.querySelectorAll('.addToCartButton');
