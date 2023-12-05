@@ -8,7 +8,7 @@ $conn = db();
 
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 0;
 
-$userQuery = "SELECT id FROM users WHERE FN = '$username'";
+$userQuery = "SELECT id FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
 if ($userResult && mysqli_num_rows($userResult) > 0) {

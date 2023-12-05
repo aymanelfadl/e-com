@@ -21,7 +21,7 @@ $sql = "SELECT * FROM orders WHERE id_user = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo '<div class="container mt-3">';
+    echo '<div class="container mt-3" >';
     echo '<h3 Style="margin-bottom:16px;"><b>Your Orders<b></h3>';
     echo '<table class="table table-bordered">';
     echo '<thead>';

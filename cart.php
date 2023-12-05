@@ -155,11 +155,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                       <div class="cart_icon">
                         <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
-                          <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT COUNT(id_product) AS total_products FROM panier WHERE id_user = '$userId'"); ?></span></div>
+                          <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT SUM(quantity) AS quantity FROM panier WHERE id_user = '$userId'"); ?></span></div>
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                       
+                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+"); ?></span> MAD</div>
                       </div>
                     </div>
                   </div>
@@ -243,11 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <div class="col">
             
         <div class="table-responsive">
-          <table class="table">
+          <table class="table" >
             <thead>
               <tr>
-                <th scope="col" class="h5">Shopping Bag</th>
-                <th scope="col">Title</th>
+                <th scope="col" class="h5" >Shopping Bag</th>
+                <th scope="col" style="width:300px;text-align:center;">Title</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
               </tr>
@@ -258,17 +259,18 @@ $query = "SELECT pr.* FROM panier p JOIN products pr ON p.id_product = pr.id ORD
 $cartResult = mysqli_query($conn, $query);
 foreach ($cartResult as $row) {
 ?>
-    <tr>
-        <th scope="row">
-            <div class="d-flex align-items-center">
-                <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3" style="width: 180px;" alt="Book">
-                <div class="flex-column ms-4">
-                    <p class="mb-2" style="margin-left: 8px;"><?php echo $row['DESCREPTION']; ?></p>
-                </div>
-            </div>
+    <tr id="productRow_<?php echo $row['id']; ?>">
+        <th scope="row" >
+        <div class="d-flex align-items-center position-relative">
+            <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3 product-image" style="max-width: 200px;margin-left:18px" alt="Book">
+            <button class="btn btn-link delete-icon" data-product-id="<?php echo $row['id']; ?>" data-user-id="<?php echo $userId; ?>" style="position: absolute; top: 0; right: 0; background-color:royalblue; color: white; padding: 5px; cursor: pointer; display: block;"onmouseover="this.style.backgroundColor='darkblue'" onmouseout="this.style.backgroundColor='royalblue'" 
+                  onclick="removeProduct(<?php echo $row['id']; ?>, <?php echo $userId; ?>, 'productRow_<?php echo $row['id']; ?>')">
+                <i class="fas fa-times" style="width: 50px;"></i>
+            </button>
+        </div>
         </th>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight:bolder"><?php echo $row['title']; ?></p>
+            <p class="mb-0" style="font-weight:bolder; text-align:center;"><?php echo $row['title']; ?></p>
         </td>
         <td class="align-middle">
             <div class="d-flex flex-row">

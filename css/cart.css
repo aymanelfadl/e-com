@@ -3,12 +3,7 @@
     height: 100vh !important;
     }
     }
-    .full-width-container {
-        width: 100%;
-      }
+    .product-row {
+      position: relative;
+  }
   
-      /* Other styles remain the same */
-      .card1 {
-        border-radius: 16px;
-      }
-      

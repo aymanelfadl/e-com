@@ -148,7 +148,8 @@ quantityMinusButtons.forEach(function (minusButton) {
     minusButton.addEventListener('click', function () {
         var productId = minusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
         decrementQuantity(productId);
-        updateSubtotal()
+        updateSubtotal();
+        decrementCart(parseFloat(localStorage.getItem(productId)), productId);
     });
 });
 
@@ -157,7 +158,8 @@ quantityPlusButtons.forEach(function (plusButton) {
     plusButton.addEventListener('click', function () {
         var productId = plusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
         incrementQuantity(productId);
-        updateSubtotal()
+        updateSubtotal();
+        updateCart();
     });
 });
 
@@ -321,7 +323,7 @@ function checkout(userId) {
             localStorage.setItem('checkoutSuccess', 'true');
 
             // Redirect to index.php after successful checkout
-            // window.location.href = 'index.php';
+            window.location.href = 'index.php';
         },
         error: function (error) {
             console.error('Error during checkout:', error);
@@ -422,16 +424,86 @@ function hideSignUpMessage() {
     signupAlert.style.display = 'none';
 }
 
-
 function toggleUserOrders() {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     userOrdersContainer.style.display = (userOrdersContainer.style.display === 'none' || userOrdersContainer.style.display === '') ? 'block' : 'none';
 }
+
 document.addEventListener('click', function (event) {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     var showUserCommandButton = document.getElementById('showUserCommand');
 
+    // Check if the clicked element is not the container or the showUserCommand button
     if (event.target !== userOrdersContainer && event.target !== showUserCommandButton) {
         userOrdersContainer.style.display = 'none';
     }
 });
+
+// Close the container when the user scrolls
+document.addEventListener('scroll', function () {
+    var userOrdersContainer = document.getElementById('userOrdersContainer');
+    userOrdersContainer.style.display = 'none';
+});
+
+
+function decrementCart(productPrice, productId) {
+    var cartPriceElement = document.querySelector('.cart_price');
+    var cartCountElement = document.getElementById('cartCount');
+
+    // Get the current cart count value
+    var currentCount = parseInt(cartCountElement.innerText);
+
+    // Decrement the count by 1, but ensure it doesn't go below zero
+    var newCount = Math.max(0, currentCount - 1);
+
+    // Update the cart count element with the new count
+    cartCountElement.innerText = newCount;
+
+    var totalPriceText = cartPriceElement.innerText;
+    var currentTotalPrice = parseFloat(totalPriceText.replace('MAD', ''));
+
+    if (isNaN(currentTotalPrice)) {
+        currentTotalPrice = 0;
+    }
+
+    // If the product is in the cart, subtract the price from the total
+    if (localStorage.getItem(productId)) {
+        currentTotalPrice -= productPrice;
+        localStorage.removeItem(productId);
+    }
+
+    // Update the cart price element
+    cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
+}
+
+
+async function removeProduct(productId, userId, containerId) {
+    try {
+        const response = await fetch('php/remove_product.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `product_id=${encodeURIComponent(productId)}&user_id=${encodeURIComponent(userId)}`,
+        });
+
+        const data = await response.json();
+        // Handle the response from the server
+        if (data.success) {
+            // If removal was successful, decrement the cart count
+           
+            decrementCart(parseFloat(localStorage.getItem(productId)), productId);
+
+            // Remove the product row from the DOM
+            var container = document.getElementById(containerId);
+            if (container) {
+                container.remove();
+            } else {
+                console.warn('Container not found:', containerId);
+            }
+            updateSubtotal();
+        } 
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}

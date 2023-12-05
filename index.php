@@ -279,8 +279,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <div>
 
 </div>
-<div id="userOrdersContainer" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 8px;text-align: center; z-index: 1000;background-color:#f2f2f2;">
-        <?php require './php/user_orders.php'; ?>
+<div id="userOrdersContainer" style="display: none; position: fixed; top: 48%; left: 50%; transform: translate(-50%, -50%); padding: 20px; border-radius: 8px; text-align: center; z-index: 1000; background-color:whitesmoke; max-height: 400px; overflow-y: auto; width: 80%; /* Set the desired width here */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <?php require './php/user_orders.php'; ?>
 </div>
 
 
