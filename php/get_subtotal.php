@@ -15,7 +15,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
 
-    $subtotal = executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX)+20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user = $userId GROUP BY p.id_user");
+    $subtotal = executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user = $userId GROUP BY p.id_user");
     echo number_format($subtotal, 2) . " MAD";
 } else {
     echo "Error: User ID not found";

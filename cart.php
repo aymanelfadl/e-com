@@ -372,7 +372,7 @@ foreach ($cartResult as $row) {
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
                   <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
-"),2) . "MAD"?></p>
+"),2) ?> MAD</p>
                 </div>
 
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
@@ -381,14 +381,7 @@ foreach ($cartResult as $row) {
                 </div>
 
                 <hr class="my-4">
-
-                <div class="d-flex justify-content-between mb-4" style="font-weight: 500;">
-                  <p class="mb-2">Total (tax included)</p>
-                  <p class="mb-2" id="totalTax" ><?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</p>
-
-                </div>
-
-                <button type="button" class="btn btn-primary btn-block btn-lg" id="checkoutButton" data-user-id="<?php echo $userId ?>">
+                <button type="button" class="btn btn-primary btn-block btn-lg" style="width: 245px; margin-top:38px"; id="checkoutButton" data-user-id="<?php echo $userId ?>">
                   <div class="d-flex justify-content-between">
                     <span>Checkout</span>
                     <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</span>

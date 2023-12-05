@@ -3,13 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var cartPriceElement = document.querySelector('.cart_price');
         var cartCountElement = document.getElementById('cartCount');
     
-        // Get the current cart count value
         var currentCount = parseFloat(cartCountElement.innerText);
     
-        // Increment the count by 1
         var newCount = currentCount + 1;
     
-        // Update the cart count element with the new count
         cartCountElement.innerText = newCount;
     
         var totalPriceText = cartPriceElement.innerText;
@@ -19,16 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
             currentTotalPrice = 0;
         }
     
-        // If the product is not in the cart, set the price to the initial product price
         if (!localStorage.getItem(productId)) {
             currentTotalPrice += productPrice;
             localStorage.setItem(productId, productPrice.toString());
         } else {
-            // If the product is already in the cart, add the price to the existing total
             currentTotalPrice += parseFloat(localStorage.getItem(productId));
         }
     
-        // Update the cart price element
         cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
     }
     
@@ -37,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.addToCartButton').on('click', function () {
         var productId = $(this).data('product-id');
         console.log(productId);
-        var userId = $(this).data('user-id'); // You need to obtain the user ID
+        var userId = $(this).data('user-id'); 
         console.log(userId);
         $.ajax({
             url: 'php/update_cart.php',
@@ -46,7 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
             success: function () {
                 console.log('Product added to cart successfully');
                 console.log(userId);
-                // You can handle additional actions or UI updates here
             },
             error: function (error) {
                 console.error('Error adding product to cart:', error);
@@ -58,27 +51,21 @@ document.addEventListener('DOMContentLoaded', function () {
         var addToCartButtons = document.querySelectorAll('.addToCartButton');
         var buyNowButtons = document.querySelectorAll('.buyNowButton');
     
-        // Add a click event listener to each "Add to Cart" button
         addToCartButtons.forEach(function (button) {
             button.addEventListener('click', function () {
-                // Get the price and product ID associated with the product
                 var productPrice = parseFloat(button.closest('.card').getAttribute('data-price'));
                 var productId = button.closest('.card').getAttribute('data-product-id');
-                // Call the updateCart function with product ID
                 updateCart(productPrice, productId);
             });
         });
 
 
         var buyNowButtons = document.querySelectorAll('.buyNowButton');
-    // Add a click event listener to each "Buy Now" button
         buyNowButtons.forEach(function (button) {
             button.addEventListener('click', function () {
-                // Get the product ID and user ID associated with the button
                 var productId = parseFloat(button.getAttribute('data-product-id'));
                 var productPrice = parseFloat(button.getAttribute('data-price'));
 
-                // Call the updateCart function with product ID and user ID
                 updateCart(productPrice, productId);
            });
         
@@ -87,34 +74,29 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.buyNowButton').on('click', function () {
         var productId = $(this).data('product-id');
         console.log(productId);
-        var userId = $(this).data('user-id'); // You need to obtain the user ID
+        var userId = $(this).data('user-id'); 
         console.log(userId);
-        // Send the data to the server for insertion into the 'panier' table
         $.ajax({
             url: 'php/update_cart.php',
             method: 'POST',
             data: { user_id: userId, product_id: productId, quantity: 1 },
             success: function () {
                 console.log('Product added to cart successfully');
-                // You can handle additional actions or UI updates here
             },
             error: function (error) {
                 console.error('Error adding product to cart:', error);
             }
         });
     });
-// Function to decrement quantity
 function decrementQuantity(productId) {
     updateQuantity(productId, -1);
 }
 
-// Function to increment quantity
 function incrementQuantity(productId) {
     updateQuantity(productId, 1);
 
 }
 
-// Function to update the quantity on the server and in the UI
 function updateQuantity(productId, change) {
     var userId = document.querySelector('.form-control[data-product-id="' + productId + '"]').getAttribute('data-user-id');
     console.log(userId);
@@ -122,38 +104,32 @@ function updateQuantity(productId, change) {
     var quantityInput = document.querySelector('.form-control[data-product-id="' + productId + '"]');
     var currentQuantity = parseInt(quantityInput.value);
 
-    // Check if the new quantity is valid (greater than 0 for decrement)
     if (currentQuantity + change >= 0) {
-        // Update the quantity in the UI
         quantityInput.value = currentQuantity + change;
 
-        // Send an AJAX request to update the quantity in the database
         $.post("php/update_quantity.php", {
             userId: userId,
             productId: productId,
             decrement: (change === -1).toString()
         }, function (response) {
             console.log(response);
-            // You can handle the response here if needed
+            
         });
     }
 }
 
-// Assuming you have a similar structure for your quantity buttons as in your cart.php
 var quantityMinusButtons = document.querySelectorAll('.fa-minus');
 var quantityPlusButtons = document.querySelectorAll('.fa-plus');
 
-// Add click event listeners to decrement quantity
 quantityMinusButtons.forEach(function (minusButton) {
     minusButton.addEventListener('click', function () {
         var productId = minusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
         decrementQuantity(productId);
         updateSubtotal();
-        decrementCart(parseFloat(localStorage.getItem(productId)), productId);
+        decrementCart(productId);
     });
 });
 
-// Add click event listeners to increment quantity
 quantityPlusButtons.forEach(function (plusButton) {
     plusButton.addEventListener('click', function () {
         var productId = plusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
@@ -163,28 +139,32 @@ quantityPlusButtons.forEach(function (plusButton) {
     });
 });
 
-
+function decrementCart(productId) {
+    var cartCountElement = document.getElementById('cartCount');
+    var currentCount = parseInt(cartCountElement.innerText);
+    var newCount = Math.max(0, currentCount - 1);
+    
+    cartCountElement.innerText = newCount;
+}
 
 
 
     function performSearch() {
         var searchTerm = $("#searchInput").val().toLowerCase();
 
-        // Use AJAX to fetch filtered products from the server
         $.ajax({
             url: 'php/search.php',
             type: 'GET',
             data: { term: searchTerm },
             dataType: 'json',
             success: function (data) {
-                // Display filtered products or all products if the search term is empty
                 if (searchTerm.trim() === "") {
-                    $("#searchResults").empty(); // Clear search results container
-                    $("#originalTable").show(); // Show the original product table
+                    $("#searchResults").empty(); 
+                    $("#originalTable").show(); 
                 } else {
-                    $("#originalTable").hide(); // Hide the original product table
+                    $("#originalTable").hide(); 
                     displayFilteredProducts(data);
-                    attachAddToCartListeners(); // Reattach event listeners after rendering
+                    attachAddToCartListeners(); 
                 }
             },
             error: function (xhr, status, error) {
@@ -194,7 +174,6 @@ quantityPlusButtons.forEach(function (plusButton) {
     }
 
     function fetchProducts(category) {
-        // Use AJAX to fetch filtered products from the server
         return $.ajax({
             url: 'php/load_categories.php',
             type: 'GET',
@@ -207,21 +186,19 @@ quantityPlusButtons.forEach(function (plusButton) {
     }
 
     function displayAllProducts() {
-        $("#searchResults").empty(); // Clear search results container
-        $("#originalTable").show(); // Show the original product table
-        attachAddToCartListeners(); // Reattach event listeners after rendering
+        $("#searchResults").empty();
+        $("#originalTable").show(); 
+        attachAddToCartListeners(); 
     }
 
     function displayFilteredProducts(data) {
-        $("#originalTable").hide(); // Hide the original product table
+        $("#originalTable").hide(); 
         var $searchResults = $("#searchResults");
-        $searchResults.empty(); // Clear search results container
+        $searchResults.empty(); 
 
         var count = 0;
 
-        // Render filtered products
         data.forEach(function (products) {
-            // Start a new row after every fourth product
             if (count % 4 === 0) {
                 $searchResults.append('<tr>');
             }
@@ -241,13 +218,11 @@ quantityPlusButtons.forEach(function (plusButton) {
 
             count++;
 
-            // End the row after every fourth product
             if (count % 4 === 0) {
                 $searchResults.append('</tr>');
             }
         });
 
-        // If there are incomplete cells in the last row, add empty cells to fill the row
         if (count % 4 !== 0) {
             var emptyCells = 4 - (count % 4);
             for (var i = 0; i < emptyCells; i++) {
@@ -268,32 +243,28 @@ quantityPlusButtons.forEach(function (plusButton) {
         }
     }
 
-    // Event listeners
+
     $("#searchInput").on("input", performSearch);
     $("#searchButton").on("click", performSearch);
 
     $("ul").on("click", "li.hassubs ul li a", function (event) {
-        event.preventDefault(); // Prevent the default behavior of the link
+        event.preventDefault(); 
         var category = $(this).text().trim();
         handleCategoryFilter(category);
 
-        // Highlight the selected category link (optional)
         $("ul li.hassubs ul li a").removeClass("selected");
         $(this).addClass("selected");
     });
 
-    // Initialize by displaying all products
     displayAllProducts();
 });
 
 
 function updateSubtotal() {
-    // Send an AJAX request to get the updated subtotal from the server
     $.ajax({
         url: 'php/get_subtotal.php',
-        method: 'POST', // or 'POST', depending on your server-side script
+        method: 'POST', 
         success: function (response) {
-            // Assuming the response is the updated subtotal value
             var subtotal = parseFloat(response);
             $('#totalValue').text(response );
             $('#totalTax').text(response);
@@ -307,7 +278,6 @@ function updateSubtotal() {
 
 
 function checkout(userId) {
-    // Example: Sending a POST request to checkout.php
     $.ajax({
         url: 'php/checkout.php',
         method: 'POST',
@@ -315,60 +285,49 @@ function checkout(userId) {
         success: function (response) {
             console.log('Checkout successful:', response);
             
-            // Handle success, e.g., show a success message
             var cartCountElement = document.getElementById('cartCount');
             cartCountElement.innerText = '0';
 
-            // Set a flag in localStorage to indicate successful checkout
             localStorage.setItem('checkoutSuccess', 'true');
 
-            // Redirect to index.php after successful checkout
             window.location.href = 'index.php';
         },
         error: function (error) {
             console.error('Error during checkout:', error);
-            // Handle error, e.g., show an error message to the user
         }
     });
 }
 
-// Check for the checkout success flag on page load
 document.addEventListener('DOMContentLoaded', function () {
     var checkoutSuccess = localStorage.getItem('checkoutSuccess');
 
     if (checkoutSuccess === 'true') {
-        // Show the success message
         showSuccessMessage();
 
-        // Clear the flag to avoid showing the message on subsequent page loads
         localStorage.removeItem('checkoutSuccess');
     }
 });
 
 $('#checkoutButton').on('click', function () {
-    // Replace with your logic to get the user ID
     var userId = $(this).data('user-id');
     checkout(userId);
 });
 
 $("#saveProfileBtn").click(function(event) {
-    // Prevent default form submission
     event.preventDefault();
 
-    // Get values from input fields
     var newFirstName = $("input[name='newFirstName']").val();
     var newLastName = $("input[name='newLastName']").val();
     var newUsername = $("input[name='newUsername']").val();
     var newEmail = $("input[name='newEmail']").val();
     var newPassword = $("input[name='newPassword']").val();
 
-    // Client-side validation (you can add more validation as needed)
     if (!newFirstName || !newLastName || !newUsername || !newEmail || !newPassword) {
         alert("Please fill out all required fields.");
         return;
     }
 
-    // Send the data to the server using AJAX
+
     $.ajax({
         url: 'php/edit_profile.php',
         method: 'POST',
@@ -380,14 +339,11 @@ $("#saveProfileBtn").click(function(event) {
             newPassword: newPassword
         },
         success: function(response) {
-            // Handle the response from the server
             console.log(response);
             
-            // Example: Redirect to a new page if the update was successful
             if (response === "Profile updated successfully!") {
                 window.location.href = 'index.php';
             } else {
-                // Handle other responses or update the UI accordingly
                 alert("Profile update failed. Please try again.");
             }
         },
@@ -399,13 +355,11 @@ $("#saveProfileBtn").click(function(event) {
     });
 });
 
-// Toggle the visibility of the success message
 function showSuccessMessage() {
     var successMessage = document.getElementById('successMessage');
     successMessage.style.display = 'block';
 
     setTimeout(function () {
-        // Hide the success message after 3 seconds
         successMessage.style.display = 'none';
     }, 3000);
 }
@@ -413,7 +367,6 @@ function showSignUpMessage() {
     var signupAlert = document.getElementById('signupAlert');
     signupAlert.style.display = 'block';
 
-    // Hide the alert after 1 second
     setTimeout(function () {
         hideSignUpMessage();
     }, 1000);
@@ -433,13 +386,11 @@ document.addEventListener('click', function (event) {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     var showUserCommandButton = document.getElementById('showUserCommand');
 
-    // Check if the clicked element is not the container or the showUserCommand button
     if (event.target !== userOrdersContainer && event.target !== showUserCommandButton) {
         userOrdersContainer.style.display = 'none';
     }
 });
 
-// Close the container when the user scrolls
 document.addEventListener('scroll', function () {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     userOrdersContainer.style.display = 'none';
@@ -448,18 +399,10 @@ document.addEventListener('scroll', function () {
 
 function decrementCart(productId, productQuantity) {
     var cartCountElement = document.getElementById('cartCount');
-
-    // Get the current cart count value
     var currentCount = parseInt(cartCountElement.innerText);
-
-    // Decrement the count by 1, but ensure it doesn't go below zero
     var newCount = Math.max(0, currentCount - productQuantity);
 
-    // Update the cart count element with the new count
     cartCountElement.innerText = newCount;
-
-        // updateSubtotal();
-        // updateCart();
 }
 
 
@@ -475,13 +418,10 @@ async function removeProduct(productId, userId, containerId, quantity) {
         });
 
         const data = await response.json();
-        // Handle the response from the server
         if (data.success) {
-            // If removal was successful, decrement the cart count
            
             decrementCart(productId,quantity);
 
-            // Remove the product row from the DOM
             var container = document.getElementById(containerId);
             if (container) {
                 container.remove();
