@@ -321,7 +321,7 @@ function checkout(userId) {
             localStorage.setItem('checkoutSuccess', 'true');
 
             // Redirect to index.php after successful checkout
-            window.location.href = 'index.php';
+            // window.location.href = 'index.php';
         },
         error: function (error) {
             console.error('Error during checkout:', error);

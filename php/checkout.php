@@ -39,8 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail = new PHPMailer(true);
 
     try {
-        $stmt = $conn->prepare("SELECT EMAIL, USRENAME FROM users WHERE id = ?");
-        $stmt->bind_param('s', $userId);
+        $stmt = $conn->prepare("SELECT EMAIL, USERNAME FROM users WHERE id = '$userId'");
         $stmt->execute();
 
         $result = $stmt->get_result();
