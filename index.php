@@ -388,7 +388,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
       © 2023 Copyright:
-      <a class="text-reset fw-bold" href="https://mdbootstrap.com/">ProFitFuel.com</a>
+      <a class="text-reset fw-bold" href="index.php">ProFitFuel.com</a>
     </div>
     <!-- Copyright -->
   </footer>
