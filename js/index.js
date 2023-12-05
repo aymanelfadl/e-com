@@ -446,38 +446,25 @@ document.addEventListener('scroll', function () {
 });
 
 
-function decrementCart(productPrice, productId) {
-    var cartPriceElement = document.querySelector('.cart_price');
+function decrementCart(productId, productQuantity) {
     var cartCountElement = document.getElementById('cartCount');
 
     // Get the current cart count value
     var currentCount = parseInt(cartCountElement.innerText);
 
     // Decrement the count by 1, but ensure it doesn't go below zero
-    var newCount = Math.max(0, currentCount - 1);
+    var newCount = Math.max(0, currentCount - productQuantity);
 
     // Update the cart count element with the new count
     cartCountElement.innerText = newCount;
 
-    var totalPriceText = cartPriceElement.innerText;
-    var currentTotalPrice = parseFloat(totalPriceText.replace('MAD', ''));
-
-    if (isNaN(currentTotalPrice)) {
-        currentTotalPrice = 0;
-    }
-
-    // If the product is in the cart, subtract the price from the total
-    if (localStorage.getItem(productId)) {
-        currentTotalPrice -= productPrice;
-        localStorage.removeItem(productId);
-    }
-
-    // Update the cart price element
-    cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
+        // updateSubtotal();
+        // updateCart();
 }
 
 
-async function removeProduct(productId, userId, containerId) {
+
+async function removeProduct(productId, userId, containerId, quantity) {
     try {
         const response = await fetch('php/remove_product.php', {
             method: 'POST',
@@ -492,7 +479,7 @@ async function removeProduct(productId, userId, containerId) {
         if (data.success) {
             // If removal was successful, decrement the cart count
            
-            decrementCart(parseFloat(localStorage.getItem(productId)), productId);
+            decrementCart(productId,quantity);
 
             // Remove the product row from the DOM
             var container = document.getElementById(containerId);
