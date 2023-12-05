@@ -28,6 +28,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $moveItemsQuery = "INSERT INTO order_product (id_order, id_product, quantity) SELECT '$orderId', id_product, quantity FROM panier WHERE id_user = '$userId'";
     mysqli_query($conn, $moveItemsQuery);
 
+    $panierItemsQuery = "SELECT id_product, quantity FROM panier WHERE id_user = '$userId'";
+    $panierItemsResult = mysqli_query($conn, $panierItemsQuery);
+
+    while ($panierItem = mysqli_fetch_assoc($panierItemsResult)) {
+        $productId = $panierItem['id_product'];
+        $quantity = $panierItem['quantity'];
+
+        $updateProductQuery = "UPDATE products SET Quantity = Quantity - $quantity WHERE id = $productId";
+        mysqli_query($conn, $updateProductQuery);
+    }
+
     // Clear the panier for the user
     $clearPanierQuery = "DELETE FROM panier WHERE id_user = '$userId'";
     mysqli_query($conn, $clearPanierQuery);
