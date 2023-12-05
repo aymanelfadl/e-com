@@ -1,19 +1,22 @@
 <?php
 require "config.php"; // Include your database connection file
 session_start();
-
+$conn = db();
 // Ensure that this script is accessed via a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the user ID from the POST data
     $userId = $_POST['user_id'];
-
+    $userQuery = "SELECT EMAIL FROM users WHERE id = '$userId'";
+    $userResult = mysqli_query($conn, $userQuery);
+    
+    if ($userResult && mysqli_num_rows($userResult) > 0) {
+        $userRow = mysqli_fetch_assoc($userResult);
+        $email = $userRow['EMAIL'];
+    }
     // Create a new order
     $orderStatus = 'Pending';
     $orderDate = date('Y-m-d'); // Today's date
     $deliveryDate = date('Y-m-d', strtotime('+5 days')); // Today's date + 5 days
-
-    $conn = db(); // Assuming db() is a function that returns the database connection
-
     // Insert order into the orders table
     $insertOrderQuery = "INSERT INTO orders (id_user, STATUS, ordate, diliverdate) VALUES
      ('$userId', '$orderStatus', '$orderDate', '$deliveryDate')";
@@ -32,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Return a response (optional)
     echo json_encode(['message' => 'Checkout successful']);
-
+    include "send_email.php";
 } else {
     // Handle invalid requests
     http_response_code(400);

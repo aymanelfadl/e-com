@@ -92,6 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
     <div style="display: inline-block;">
+      <button type="button" id="showUserCommand" class="btn btn-light" style="margin-top: 10px;" onclick="toggleUserOrders()">
+      <i class="fa-regular fa-handshake" style="margin-right: 8px;"> </i>Your Commands
+      </button>
+    </div>
+    <div style="display: inline-block;">
        <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
        <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>Edit Profile
       </button>
@@ -107,6 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
         editProfileSection.style.display = 'block';
     });
 </script>
+
 
 <?php } ?>
 
@@ -269,6 +275,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
         </div>
     </div>
 </div>
+
+<div>
+
+</div>
+<div id="userOrdersContainer" style="display: none; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 8px;text-align: center; z-index: 1000;background-color:#f2f2f2;">
+        <?php require './php/user_orders.php'; ?>
+</div>
+
+
+
 
     <table class="products-table" id="originalTable">
       <tbody id="productsRow">

@@ -421,3 +421,28 @@ function hideSignUpMessage() {
     var signupAlert = document.getElementById('signupAlert');
     signupAlert.style.display = 'none';
 }
+
+
+function toggleUserOrders() {
+    var userOrdersContainer = document.getElementById('userOrdersContainer');
+    userOrdersContainer.style.display = (userOrdersContainer.style.display === 'none' || userOrdersContainer.style.display === '') ? 'block' : 'none';
+}
+document.addEventListener('click', function (event) {
+    var userOrdersContainer = document.getElementById('userOrdersContainer');
+    var showUserCommandButton = document.getElementById('showUserCommand');
+
+    if (event.target !== userOrdersContainer && event.target !== showUserCommandButton) {
+        userOrdersContainer.style.display = 'none';
+    }
+});
+
+fetch('.php/send_email.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: 'user_id=1', // Replace with your actual user_id value
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));

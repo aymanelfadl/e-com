@@ -1103,3 +1103,10 @@ select option
     background-color: #000; /* Change this to the desired border color */
   }
 
+  .even {
+	background-color: #f2f2f2; /* Light grey color */
+}
+
+.odd {
+	background-color: #ffffff; /* White color, or any other color you prefer */
+}
