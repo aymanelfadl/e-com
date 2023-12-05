@@ -261,14 +261,14 @@ foreach ($cartResult as $row) {
     <tr>
         <th scope="row">
             <div class="d-flex align-items-center">
-                <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3" style="width: 180px;" alt="Book">
                 <div class="flex-column ms-4">
                     <p class="mb-2" style="margin-left: 8px;"><?php echo $row['DESCREPTION']; ?></p>
                 </div>
             </div>
         </th>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight: 500;"><?php echo $row['title']; ?></p>
+            <p class="mb-0" style="font-weight:bolder"><?php echo $row['title']; ?></p>
         </td>
         <td class="align-middle">
             <div class="d-flex flex-row">
@@ -285,7 +285,7 @@ foreach ($cartResult as $row) {
             </div>
         </td>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight: 500;"><?php echo $row['PRIX']; ?> MAD</p>
+            <p class="mb-0" style="font-weight:bolder"><?php echo $row['PRIX']; ?> MAD</p>
         </td>
       </tr>
 <?php } ?>

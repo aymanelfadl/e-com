@@ -34,7 +34,7 @@ if ($result && mysqli_num_rows($result) > 0) {
          onmouseover="this.style.borderColor='#007bff';" 
          onmouseout="this.style.borderColor='transparent';"
          style="border: 1px solid transparent; transition: border-color 0.3s ease-in-out;">
-        <img src="./product_images/<?php echo $row['image_file']; ?>" alt="<?php echo $row['image_file']; ?>" style="width:100%">
+        <img src="./product_images/<?php echo $row['image_file']; ?>" alt="<?php echo $row['image_file']; ?>" style="width:75%;">
         <h2><?php echo $row['title']; ?></h2>
         <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
         </a>

@@ -192,7 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                         <li><a href="#">Weight Management<i class="fas fa-chevron-down"></i></a></li>
                         <li><a href="#">Vitamins and Minerals<i class="fas fa-chevron-down"></i></a></li>
                         <li><a href="#">Joint Support<i class="fas fa-chevron-down"></i></a></li>
-                        <li><a href="#">Hydration and Electrolytes<i class="fas fa-chevron-down"></i></a></li>
                       </ul>
                     </li>
                     <li><a href="#">About<i class="fas fa-chevron-down"></i></a></li>

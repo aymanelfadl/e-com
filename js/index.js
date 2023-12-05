@@ -228,10 +228,9 @@ quantityPlusButtons.forEach(function (plusButton) {
                 '<td>' +
                 '<a href="product_page.php?id='+ products.id +'">'+
                 '<div class="card" data-price="' + products.PRIX + '">' +
-                '<img src="../product_image/    ' + products.image_file + '" alt="' + products.image_file + '" style="width:100%">' +
+                '<img src="./product_images/'+products.image_file +'" alt="' + products.image_file + '" style="width:100%">' +
                 '<h2>' + products.title + '</h2>' +
                 '<p class="Price"><b>' + products.PRIX + ' MAD</b></p>' +
-                '<p>' + products.DESCREPTION + '</p>' +
                 '</a>'+
                 '<p><button class="addToCartButton">Add to Cart</button></p>' +
                 '</div>' +
