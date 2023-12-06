@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     
         cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
     }
-    
+
     
     
     $('.addToCartButton').on('click', function () {
@@ -257,6 +257,7 @@ function decrementCart(productId) {
     });
 
     displayAllProducts();
+
 });
 
 
@@ -362,6 +363,7 @@ function showSuccessMessage() {
     setTimeout(function () {
         successMessage.style.display = 'none';
     }, 3000);
+
 }
 function showSignUpMessage() {
     var signupAlert = document.getElementById('signupAlert');
@@ -377,6 +379,8 @@ function hideSignUpMessage() {
     signupAlert.style.display = 'none';
 }
 
+
+
 function toggleUserOrders() {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     userOrdersContainer.style.display = (userOrdersContainer.style.display === 'none' || userOrdersContainer.style.display === '') ? 'block' : 'none';
@@ -386,7 +390,12 @@ document.addEventListener('click', function (event) {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     var showUserCommandButton = document.getElementById('showUserCommand');
 
-    if (event.target !== userOrdersContainer && event.target !== showUserCommandButton) {
+    if (
+        event.target !== userOrdersContainer &&
+        event.target !== showUserCommandButton &&
+        !userOrdersContainer.contains(event.target) &&
+        !isClickableElement(event.target)
+    ) {
         userOrdersContainer.style.display = 'none';
     }
 });
@@ -395,6 +404,13 @@ document.addEventListener('scroll', function () {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     userOrdersContainer.style.display = 'none';
 });
+
+function isClickableElement(element) {
+    var clickableElements = ['A', 'BUTTON']; 
+    return clickableElements.includes(element.tagName);
+}
+
+
 
 
 function decrementCart(productId, productQuantity) {
@@ -433,4 +449,48 @@ async function removeProduct(productId, userId, containerId, quantity) {
     } catch (error) {
         console.error('Error:', error);
     }
+}
+
+function cancelOrder(orderID) {
+    console.log('Cancel Order ID:', orderID); // Log orderID for debugging
+    $.ajax({
+        type: 'POST',
+        url: 'php/remove_order.php',
+        data: { orderID: orderID },
+        success: function(response) {
+            console.log('Order canceled successfully');
+            window.location.href = 'index.php';
+        },
+        error: function(xhr, status, error) {
+            console.error('Error canceling order:', error);
+        }
+    });
+}
+
+
+function closeConfirmationDialog() {
+    var confirmationDialog = document.getElementById('customConfirmationDialog');
+    confirmationDialog.style.display = 'none';
+}
+
+function cancelOrderConfirmed(orderID) {
+    if (orderID) {
+        console.log('Cancel Order Confirmed ID:', orderID); // Log orderID for debugging
+        // Only cancel the order if orderID is truthy
+        cancelOrder(orderID);
+    }
+    closeConfirmationDialog();
+}
+
+function showConfirmationDialog(message, orderID) {
+    var confirmationDialog = document.getElementById('customConfirmationDialog');
+    var confirmationMessage = document.getElementById('confirmationMessage');
+
+    confirmationMessage.textContent = message;
+    confirmationDialog.style.display = 'block';
+
+    // Pass orderID to cancelOrderConfirmed
+    document.getElementById('yesButton').onclick = function() {
+        cancelOrderConfirmed(orderID);
+    };
 }

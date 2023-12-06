@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
       </nav>
           <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
           <div id="successMessage" style="background: #4CAF50;color: white; padding: 10px; border-radius: 5px; width:100%; height:40px;display: none;">
-                  <h6 style="text-align: center;">Your order was sent successfully!. check Your <b>EMAIL!</b></h6>
+                  <h6 style="text-align: center;">Your order was sent successfully!. Check Your <b>EMAIL!</b></h6>
           </div>
           <?php if ($username == 0): ?>
         <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
@@ -282,6 +282,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <div id="userOrdersContainer" style="display: none; position: fixed; top: 48%; left: 50%; transform: translate(-50%, -50%); padding: 20px; border-radius: 8px; text-align: center; z-index: 1000; background-color:whitesmoke; max-height: 400px; overflow-y: auto; width: 80%; /* Set the desired width here */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <?php require './php/user_orders.php'; ?>
 </div>
+<div id="customConfirmationDialog" class="confirmation-dialog" style="display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index:100000
+    ">
+    <p id="confirmationMessage">Are you sure you want to cancel this order?</p>
+    <button id="yesButton" onclick="cancelOrderConfirmed(true)" class="btn btn-dange" style="background-color: red;color:#ffff";>Yes</button>
+    <button onclick="cancelOrderConfirmed(false)" class="btn" style="background-color: royalblue; color:#ffff">No</button>
+</div>
+
 
 
 

@@ -16,12 +16,11 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
 }
 
-
 $sql = "SELECT * FROM orders WHERE id_user = $userId";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo '<div class="container mt-3" >';
+    echo '<div class="container mt-3">';
     echo '<h3 Style="margin-bottom:16px;"><b>Your Orders<b></h3>';
     echo '<table class="table table-bordered">';
     echo '<thead>';
@@ -30,24 +29,36 @@ if ($result->num_rows > 0) {
     echo '<th scope="col"><b>Status</b></th>';
     echo '<th scope="col"><b>Order Date</b></th>';
     echo '<th scope="col"><b>Delivery Date</b></th>';
+
     echo '</tr>';
     echo '</thead>';
     echo '<tbody>';
 
-    $rowColorClass = 'even'; 
+    $rowColorClass = 'even';
 
     while ($row = $result->fetch_assoc()) {
-        // Toggle row color class
         $rowColorClass = ($rowColorClass === 'even') ? 'odd' : 'even';
-
-        // Apply different classes based on the row color class
+    
+        $deliveryDate = strtotime($row["diliverdate"]);
+        $currentDate = strtotime(date("Y-m-d"));
+    
+        $action = '';
+        if ($deliveryDate > $currentDate) {
+            $confirmationMessage = "Are you sure you want to cancel this order?";
+            $action = '<button class="btn btn-danger" onclick="showConfirmationDialog(\'Are you sure you want to cancel this order?\', ' . $row["id"] . ');">Cancel Order</button>';
+        } else {
+            $action = '<button class="btn btn-warning" onclick="sendReport(' . $row["id"] . ')">Report</button>';
+        }
+        
         echo '<tr class="' . $rowColorClass . '">';
         echo '<td>' . $row["id"] . '</td>';
         echo '<td>' . $row["STATUS"] . '</td>';
         echo '<td>' . $row["ordate"] . '</td>';
         echo '<td>' . $row["diliverdate"] . '</td>';
+        echo '<td>' . $action . '</td>';
         echo '</tr>';
     }
+    
 
     echo '</tbody>';
     echo '</table>';
