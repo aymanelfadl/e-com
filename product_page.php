@@ -223,7 +223,7 @@ editProfileSection.style.display = 'block';
                         <div class="buttons d-flex my-5">
         <button class="buyNowButton btn btn-primary" style="padding: 16px; width:300px;"
                 data-product-id="<?php echo $product['id']; ?>"
-                data-product-price="<?php echo $product['PRIX'];?>"
+                data-price="<?php echo $product['PRIX'];?>"
                 data-user-id="<?php echo $userId; ?>"
                 <?php if ($username == 0) { echo 'onclick="showSignUpMessage();"'; } ?>>
             Add to Cart

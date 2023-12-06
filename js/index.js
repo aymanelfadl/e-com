@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', function () {
                 var productId = parseFloat(button.getAttribute('data-product-id'));
                 var productPrice = parseFloat(button.getAttribute('data-price'));
-
                 updateCart(productPrice, productId);
            });
         
@@ -390,12 +389,8 @@ document.addEventListener('click', function (event) {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     var showUserCommandButton = document.getElementById('showUserCommand');
 
-    if (
-        event.target !== userOrdersContainer &&
-        event.target !== showUserCommandButton &&
-        !userOrdersContainer.contains(event.target) &&
-        !isClickableElement(event.target)
-    ) {
+    if (event.target !== userOrdersContainer && event.target !== showUserCommandButton && !userOrdersContainer.contains(event.target) && !isClickableElement(event.target)) 
+    {
         userOrdersContainer.style.display = 'none';
     }
 });

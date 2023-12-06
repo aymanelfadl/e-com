@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                       <div class="cart_icon">
                         <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
-                          <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT COUNT(id_product) AS total_products FROM panier WHERE id_user = '$userId'"); ?></span></div>
+                        <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT SUM(quantity) AS quantity FROM panier WHERE id_user = '$userId'"); ?></span></div>
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
