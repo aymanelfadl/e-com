@@ -452,7 +452,7 @@ async function removeProduct(productId, userId, containerId, quantity) {
 }
 
 function cancelOrder(orderID) {
-    console.log('Cancel Order ID:', orderID); // Log orderID for debugging
+    console.log('Cancel Order ID:', orderID); 
     $.ajax({
         type: 'POST',
         url: 'php/remove_order.php',
@@ -475,8 +475,8 @@ function closeConfirmationDialog() {
 
 function cancelOrderConfirmed(orderID) {
     if (orderID) {
-        console.log('Cancel Order Confirmed ID:', orderID); // Log orderID for debugging
-        // Only cancel the order if orderID is truthy
+        console.log('Cancel Order Confirmed ID:', orderID); 
+        
         cancelOrder(orderID);
     }
     closeConfirmationDialog();
@@ -493,4 +493,60 @@ function showConfirmationDialog(message, orderID) {
     document.getElementById('yesButton').onclick = function() {
         cancelOrderConfirmed(orderID);
     };
+}
+
+function showFeedbackModal() {
+    $('#feedback-form-modal').modal('show');
+}
+
+function closeFeedbackModal() {
+    $('#feedback-form-modal').modal('hide');
+}
+
+function submitFeedback() {
+    var feedbackText = document.getElementById('feedbackId').value;
+
+    $.ajax({
+        type: 'POST',
+        url: 'php/submit_feedback.php',
+        data: { feedback: feedbackText },
+        dataType: 'json', 
+        success: function(response) {
+            console.log(response); 
+            if (response.success) {
+                console.log('Feedback submitted successfully');
+
+                window.location.href = 'index.php';
+            } else {
+                console.error('Error submitting feedback:', response.error);
+                
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX error:', error);
+        
+        }
+    });
+}
+
+function changeRatingColor(radio) {
+    resetRatingColor(); 
+    setRatingColor(radio); 
+}
+
+function hoverRatingColor(radio) {
+    resetRatingColor(); 
+    setRatingColor(radio);
+}
+
+function resetRatingColor() {
+    var spans = document.querySelectorAll('.rating-input-wrapper span');
+    spans.forEach(function(span) {
+        span.style.backgroundColor = '';
+    });
+}
+
+function setRatingColor(radio) {
+    var selectedSpan = radio.nextElementSibling; 
+    selectedSpan.style.backgroundColor = 'yellow';
 }

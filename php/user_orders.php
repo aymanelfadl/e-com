@@ -47,7 +47,7 @@ if ($result->num_rows > 0) {
             $confirmationMessage = "Are you sure you want to cancel this order?";
             $action = '<button class="btn btn-danger" onclick="showConfirmationDialog(\'Are you sure you want to cancel this order?\', ' . $row["id"] . ');">Cancel Order</button>';
         } else {
-            $action = '<button class="btn btn-warning" onclick="sendReport(' . $row["id"] . ')">Report</button>';
+            $action = '<button class="btn btn-warning" onclick="showFeedbackModal()">You Feedback</button>';
         }
         
         echo '<tr class="' . $rowColorClass . '">';
