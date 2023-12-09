@@ -395,8 +395,9 @@ function toggleUserOrders() {
 document.addEventListener('click', function (event) {
     var userOrdersContainer = document.getElementById('userOrdersContainer');
     var showUserCommandButton = document.getElementById('showUserCommand');
+    var feedbackContainer = document.getElementById("feedback-form-modal")
 
-    if (event.target !== userOrdersContainer && event.target !== showUserCommandButton && !userOrdersContainer.contains(event.target) && !isClickableElement(event.target)) 
+    if (event.target !== feedbackContainer && event.target !== userOrdersContainer && event.target !== showUserCommandButton && !userOrdersContainer.contains(event.target) && !isClickableElement(event.target) && !feedbackContainer.contains(event.target)) 
     {
         userOrdersContainer.style.display = 'none';
     }
