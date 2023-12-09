@@ -261,7 +261,7 @@ foreach ($cartResult as $row) {
     <tr id="productRow_<?php echo $row['id']; ?>">
         <th scope="row" >
         <div class="d-flex align-items-center position-relative">
-            <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3 product-image" style="max-width: 200px;margin-left:18px" alt="Book">
+            <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3 product-image" style="max-width: 200px;margin-left:18px" alt="">
             <button class="btn btn-link delete-icon" data-product-id="<?php echo $row['id']; ?>" data-user-id="<?php echo $userId; ?>" style="position: absolute; top: 0; right: 0; background-color:royalblue; color: white; padding: 5px; cursor: pointer; display: block;"onmouseover="this.style.backgroundColor='darkblue'" onmouseout="this.style.backgroundColor='royalblue'" 
                   onclick="removeProduct(<?php echo $row['id']; ?>, <?php echo $userId; ?>, 'productRow_<?php echo $row['id']; ?>',<?php echo getQuantity($userId, $row['id']); ?>)">
                 <i class="fas fa-times" style="width: 50px;"></i>

@@ -2,13 +2,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateCart(productPrice, productId) {
         var cartPriceElement = document.querySelector('.cart_price');
         var cartCountElement = document.getElementById('cartCount');
-    
+        
         var currentCount = parseFloat(cartCountElement.innerText);
-    
+        if(!isNaN(currentCount)){
         var newCount = currentCount + 1;
     
         cartCountElement.innerText = newCount;
+        }else{
+            currentCount = 0 ;
+            var newCount = currentCount + 1;
     
+            cartCountElement.innerText = newCount;
+        }
         var totalPriceText = cartPriceElement.innerText;
         var currentTotalPrice = parseFloat(totalPriceText.replace('MAD', ''));
     
@@ -33,6 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(productId);
         var userId = $(this).data('user-id'); 
         console.log(userId);
+        if(!isNaN(userId)){
         $.ajax({
             url: 'php/update_cart.php',
             method: 'POST',
@@ -44,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             error: function (error) {
                 console.error('Error adding product to cart:', error);
             }
-        });
+        });}
     });        
     
     function attachAddToCartListeners() {
@@ -75,6 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(productId);
         var userId = $(this).data('user-id'); 
         console.log(userId);
+        if(!isNaN(userId)){
         $.ajax({
             url: 'php/update_cart.php',
             method: 'POST',
@@ -85,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
             error: function (error) {
                 console.error('Error adding product to cart:', error);
             }
-        });
+        });}
     });
 function decrementQuantity(productId) {
     updateQuantity(productId, -1);
@@ -370,7 +377,7 @@ function showSignUpMessage() {
 
     setTimeout(function () {
         hideSignUpMessage();
-    }, 1000);
+    }, 2000);
 }
 
 function hideSignUpMessage() {
@@ -484,7 +491,6 @@ function showConfirmationDialog(message, orderID) {
     confirmationMessage.textContent = message;
     confirmationDialog.style.display = 'block';
 
-    // Pass orderID to cancelOrderConfirmed
     document.getElementById('yesButton').onclick = function() {
         cancelOrderConfirmed(orderID);
     };
