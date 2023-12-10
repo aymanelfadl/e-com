@@ -309,7 +309,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             <div class="modal-body">
                 <form method="post">
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">How likely are you to recommend our gym to your workout buddies?</label>
+                        <label >How likely are you to recommend our gym to your workout buddies?</label>
                         <div class="rating-input-wrapper d-flex justify-content-between mt-2">
                             <label><input type="radio" name="rating" onclick="changeRatingColor(this)" style="display: none;" /><span class="border rounded px-3 py-2">1</span></label>
                             <label><input type="radio" name="rating" onclick="changeRatingColor(this)" style="display: none;" /><span class="border rounded px-3 py-2">2</span></label>
@@ -323,7 +323,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="input-two">Shape the Supplement:  </label>
+                        <label>Shape the Supplement:  </label>
                         <textarea class="form-control" id="feedbackId" rows="3" placeholder="Share Your Feedback" name="feedback"></textarea>
                     </div>
                     <div class="modal-footer">
