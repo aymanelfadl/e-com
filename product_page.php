@@ -19,11 +19,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
     $email = $userRow['EMAIL'];
-} else {
-    // Handle the case where the user ID is not found
-    echo "Error: User ID not found";
-    exit();
-}
+} 
 
 // Handle logout if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
@@ -184,7 +180,11 @@ editProfileSection.style.display = 'block';
 
 <!-- Main Navigation -->
 <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
-
+<?php if ($username == 0): ?>
+        <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
+            You need to sign up to add items to your cart. Please <b>sign up first.</b>
+        </div>
+    <?php endif; ?>
 </header>
 
 

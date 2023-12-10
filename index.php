@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           </div>
           <?php if ($username == 0): ?>
         <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
-            This is a warning alert—check it out! You need to sign up to add items to your cart. Please <b>sign up first.</b>
+                    You need to sign up to add items to your cart. Please <b>sign up first.</b>
         </div>
     <?php endif; ?>
     </header>
