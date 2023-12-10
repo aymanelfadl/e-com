@@ -35,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
 ?>
 
-
-
- <!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="en">
   <head>
       <meta charset="UTF-8">
@@ -53,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
           <!-- jQuery -->
+          
           <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
           <!-- Bootstrap JS (including Popper.js) -->
@@ -61,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
           <link rel="stylesheet" href="css/index.css">
           <link rel="stylesheet" href="css/edit_profile.css">
-
+          <link rel="stylesheet" href="css/about.css">
           <script src="js/index.js" defer></script>
           
 
@@ -213,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
         </div>
     <?php endif; ?>
     </header>
-    <!-- ======================================================================= -->  
+
     <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
     <div class="row">
     <div class="col-md-4 border-right">
@@ -274,6 +273,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
         </div>
     </div>
 </div>
+    
+
 
 <div id="userOrdersContainer" style="display: none; position: fixed; top: 48%; left: 50%; transform: translate(-50%, -50%); padding: 20px; border-radius: 8px; text-align: center; z-index: 1000; background-color:whitesmoke; max-height: 400px; overflow-y: auto; width: 80%; /* Set the desired width here */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
     <?php require './php/user_orders.php'; ?>
@@ -336,19 +337,76 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     </div>
 </div>
 
+<!-- =================================================================================== -->
+<h1 style="text-align: center; color:royalblue; margin:28px">About ProFitFuel</h1>
+<section class="bg-light py-3 py-md-5 py-xl-8">
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-md-10 col-lg-8 col-xl-7 col-xxl-6">
+        <h2 class="fs-6 text-secondary mb-2 text-uppercase text-center"><i class="fa-solid fa-users" style="margin-right: 8px;"></i>Our Team</h2>
+        <p class="text-secondary mb-5 text-center lead fs-4">Unlock your potential with us! We're a motivated team of innovators, ready to turn study into passion and work into fulfillment.</p>
+        <hr class="w-50 mx-auto mb-5 mb-xl-9 border-dark-subtle">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row text-center">
+
+   
+        <div class="col-md-6 mb-5">
+            <div class="bg-white rounded shadow-sm py-5 px-4">
+                <img src="./product_images/WhatsApp Image 2023-12-09 at 18.47.23_3f410c6b.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">Ilyas Benv</h5>
+                <span class="small text-uppercase text-muted">Web - Developer</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-5">
+            <div class="bg-white rounded shadow-sm py-5 px-4">
+                <img src="./product_images/FB_IMG_1552691483452.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                <h5 class="mb-0">Ayman Elfadl</h5>
+                <span class="small text-uppercase text-muted">Web - Developer</span>
+                <ul class="social mb-0 list-inline mt-3">
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                    <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
 
 
 
+<div class="About-us" >
 
+  <div id="map" class="map">
+    <h4 style="text-align: center; color: royalblue; margin-bottom: 28px; margin-top: 18px;">
+      <i class="fa-solid fa-location-dot" style="margin-right: 8px;"></i>ProFitFuel Location
+    </h4>
+    <p>
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13437.63250170195!2d-8.4241952!3d32.6485819!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdaf29d69e9ffcd1%3A0x59b14bbe0ae50587!2sProFitFuel!5e0!3m2!1sen!2sma"
+        width="500" height="400" style="border: 1px solid royalblue; margin-left: 78px" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </p>
+  </div>
 
-    <table class="products-table" id="originalTable">
-      <tbody id="productsRow">
-              <?php include "../Estore/php/load_products.php"; ?>
-      </tbody>
-    </table>
-  <div id="searchResults"></div>
-
-
+  <div class="infos">
+    <img src="../Estore/product_images/_2273e68d-3ad2-4a32-bcd1-112f49108bb1.jpeg" alt="ProFitFuel Image">
+    <h5 style="color:royalblue;">Welcome to PROFITFUEL</h5>
+    <p>Where we are more than just a brand – we are a movement. As the catalyst for tomorrow's visionaries, PROFITFUEL is dedicated to energizing minds and sculpting futures.</p>
+    <p>At PROFITFUEL, we believe in fueling ambitions and igniting innovations. Our mission goes beyond selling gym supplements; we are on a journey to empower young minds, providing them with the tools and inspiration to unleash their inventive spirits.</p>
+    <p>Join us in the exciting adventure of redefining tomorrow's possibilities. In a world where aspirations soar and creativity ignites, PROFITFUEL is the place where dreams take flight.</p>
+  </div>
+</div>
       
   <!-- ======================================================================= -->
   <!-- Footer -->
@@ -464,6 +522,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <!-- Copyright -->
   </footer>
   <!-- Footer -->
-      
+
   </body>
   </html>

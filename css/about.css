@@ -1,0 +1,48 @@
+.About-us {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 18px  rgba(0, 0, 0, 0.1); 
+    padding: 20px;
+    background-color: white; 
+  }
+
+  .infos {
+    flex: 1;
+    margin-right: 20px;
+    text-align: justify;
+  }
+
+  .infos h1 {
+    color: royalblue;
+  }
+
+  .infos img {
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 18px;
+    margin-left: 40%;
+  }
+
+  .map {
+    flex: 1;
+    
+  }
+  .social-link {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border-radius: 50%;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.social-link:hover, .social-link:focus {
+    background: #ddd;
+    text-decoration: none;
+    color: #555;
+}
