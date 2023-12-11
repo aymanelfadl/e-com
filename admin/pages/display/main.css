@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@200;400&family=Nova+Square&family=Poppins&family=Roboto+Mono:ital@1&display=swap');
+*{
+  font-family: 'Karla', sans-serif;
+  font-family: 'Nova Square', sans-serif;
+  font-family: 'Poppins', sans-serif;
+  font-family: 'Roboto Mono', monospace;
+}
+.display{
+   
+    padding-top: 1%;
+  overflow-y: auto;
+  overflow-x: hidden ;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3%;
+    
+  }
+  thead th:nth-child(1) {
+    width: 30%;
+  }
+  
+  thead th:nth-child(2) {
+    width: 20%;
+  }
+  
+  thead th:nth-child(3) {
+    width: 15%;
+  }
+  
+  thead th:nth-child(4) {
+    width: 35%;
+  }
+  
+  th,
+  td {
+    padding: 20px;
+  }
+  tr {
+    background-color: #D6EEEE;
+  }
+  thead{
+    background-color: #D6EEEE;
+   font-weight: bolder;
+
+  }
+  table{
+    color: black;
+    margin-top: 1.2%;
+  }
+
+  svg{
+    height: 30px;
+    margin-right: 4%;
+  }
+ 
+  a{
+    text-decoration: none;
+    
+  }
+
+
+  img{
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+  
+  }
+  header{
+    height: 100vh;
+  }
+.product-wrapper select{
+  margin-left: 3%;
+  width: 200px;
+  height: 30px;
+  background-color: #D6EEEE;
+  margin-top: 0.5%;
+}
+
+
+
+select.classic {
+  background-image:
+    linear-gradient(45deg, transparent 50%, blue 50%),
+    linear-gradient(135deg, blue 50%, transparent 50%),
+    linear-gradient(to right, skyblue, skyblue);
+  background-position:
+    calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px),
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+}
+
+select.classic:focus {
+  background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    linear-gradient(to right, gray, gray);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    100% 0;
+  background-size:
+    5px 5px,
+    5px 5px,
+    2.5em 2.5em;
+  background-repeat: no-repeat;
+  border-color: grey;
+  outline: 0;
+}
+
+
+
+input{
+  background-color:#D6EEEE;
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  border: rgb(67, 62, 62) 1px solid;
+  cursor: pointer;
+  
+}
+
+button{
+  cursor: pointer;
+}
+
+
+
+#search{
+  width:320px;
+}
+
+
+.red_row{
+  background-color: rgba(255, 110, 106, 0.53);}
+
+
+.form-popup {
+  display: none;
+  position: fixed;
+  text-align: center;
+color: black;
+ 
+  top: 50%; /* Position div at 50% from the top */
+  left: 50%; /* Position div at 50% from the left */
+  transform: translate(-50%, -50%); /* Center the div horizontally and vertically */
+  border: 8px solid #a9a9a9;
+  z-index: 100;
+  background-color:#f5f5fa;
+ max-height: 700px;
+  width: 600px;
+
+  border-radius: 4%;
+  color: black;
+  padding: 1%;
+  overflow: auto;
+
+}
+
+.content_product{
+  text-align: center;
+
+}
+.content_product input{
+  margin-top: 1%;
+  margin-bottom: 2%;
+}
+
+.content_product input:first-of-type{
+  width:400px ;
+}
+
+textarea{
+  margin-bottom: 2%;
+  background-color:#D6EEEE;
+  
+  border-radius: 10px;
+  border: back 1px solid;
+  cursor: pointer;
+}
+
+#products{
+  margin-top: 1.2%;
+}
+
+.main{
+  margin-left: 10%;
+  position: relative;
+  padding: 20px;
+  width: 100%;
+  color: black;
+}
+.main-top{
+  display: flex;
+  width: 100%;
+}
+.main-top i{
+  position: absolute;
+  right: 0;
+  margin: 10px 30px;
+  color: rgb(110, 109, 109);
+  cursor: pointer;
+}
+.main-skills{
+  display: flex;
+  margin-top: 20px;
+}
+.main-skills .card{
+  width: 25%;
+  margin: 10px;
+
+  text-align: center;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+}
+.main-skills .card h3{
+  margin: 10px;
+  text-transform: capitalize;
+}
+.main-skills .card p{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.main-skills .card i{
+  font-size: 22px;
+  padding: 10px;
+ 
+}
+.main-skills .card i svg{
+  height: 60px;
+}
+
+/* Courses */
+.main-course{
+  margin-top:20px ;
+  text-transform: capitalize;
+}
+
+.main-skills .card:nth-child(1){
+  background-color: rgba(100, 247, 123, 0.49);
+
+  
+}
+
+.main-skills .card:nth-child(2){
+  background-color: rgba(255, 255, 106, 0.53); 
+
+  
+}
+.main-skills .card:nth-child(3){
+  background-color: rgba(255, 110, 106, 0.53); 
+
+  
+}
+
+.form-popup >img:hover{
+  content: url('image.jpg');
+  transition: opacity 0.3s ease;
+  opacity: 0.4;
+  cursor: pointer;
+}
