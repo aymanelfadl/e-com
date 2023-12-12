@@ -4,14 +4,12 @@ require "./php/config.php";
 session_start();
 $conn = db();
 
-// Check if the user is logged in
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
     $username = 0;
 }
 
-// Retrieve user ID from the database
 $userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
@@ -20,18 +18,14 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
     $email = $userRow['EMAIL'];
 } else {
-    // Handle the case where the user ID is not found
     echo "Error: User ID not found";
     exit();
 }
 
-// Handle logout if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
-    // Destroy the session
     session_destroy();
 
-    // Optionally, redirect the user to another page after logout
-    header("Location: login.php"); // Change "index.php" to the desired page
+    header("Location: login.php"); 
     exit();
 }
 
@@ -49,18 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
         <script src="https://kit.fontawesome.com/aafa25b911.js" crossorigin="anonymous"></script>
 
-        <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
-        <!-- Font Awesome CSS -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
-        <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         
 
-        <!-- Bootstrap JS (including Popper.js) -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 
 
@@ -79,8 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 	
 	<header class="header" >
 
-		<!-- Top Bar -->
-
+		
 		<div class="top_bar">
 			<div class="container">
 				<div class="row">
@@ -119,8 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 			</div>		
 		</div>
 
-		<!-- Header Main -->
-
+	
 		<div class="header_main">
 			<div class="container">
 				<div class="row">
@@ -169,8 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 			</div>
 		</div>
 		
-		<!-- Main Navigation -->
-        <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
+		    <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
 	
   </header>
   <body>
@@ -196,7 +183,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                     </div>
                     <h6 class="text-right">Edit Profile</h6>
                 </div>
-                <!-- Add form tag with id, method, and action -->
                 <form id="editProfileForm" method="POST" action="./php/edit_profile.php">
           <div class="row mt-2">
         <div class="col-md-6">
@@ -401,7 +387,6 @@ foreach ($cartResult as $row) {
 
 <!-- ========================================================================= -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-  <!-- Section: Social media -->
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
     <div>
       <a href="" class="me-4 text-reset">
@@ -423,18 +408,11 @@ foreach ($cartResult as $row) {
         <i class="fab fa-github"></i>
       </a>
     </div>
-    <!-- Right -->
-  </section>
-  <!-- Section: Social media -->
-
-  <!-- Section: Links  -->
+   </section>
   <section class="">
     <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
       <div class="row mt-3">
-        <!-- Grid column -->
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-          <!-- Content -->
           <h6 class="text-uppercase fw-bold mb-4">
           <i class="fa-solid fa-dumbbell"></i> ProFitFuel   
           </h6>
@@ -442,11 +420,7 @@ foreach ($cartResult as $row) {
               ProFiFuel is dedicated to providing high-quality gym supplements to enhance your fitness journey
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
             Products
           </h6>
@@ -463,11 +437,7 @@ foreach ($cartResult as $row) {
             <a href="#!" class="text-reset">Vitamins and Minerals</a>
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
             Links
           </h6>
@@ -484,11 +454,7 @@ foreach ($cartResult as $row) {
             <a href="#!" class="text-reset">Help</a>
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-          <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
           <p><i class="fas fa-home me-3"></i> Sidi Bennoure, Fathe-10012, MR</p>
           <p>
@@ -497,21 +463,14 @@ foreach ($cartResult as $row) {
           </p>
           <p><i class="fas fa-phone me-3"></i> + 212 64-277-6368</p>
         </div>
-        <!-- Grid column -->
       </div>
-      <!-- Grid row -->
     </div>
   </section>
-  <!-- Section: Links  -->
-
-  <!-- Copyright -->
   <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
     © 2023 Copyright:
     <a class="text-reset fw-bold" href="index.php">ProFitFuel.com</a>
   </div>
-  <!-- Copyright -->
 </footer>
-<!-- Footer -->
     
 </body>
 </html>

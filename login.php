@@ -1,17 +1,14 @@
 
 <?php
-// Your PHP code goes here
+
 
 function db() {
     $host = "localhost:3306";
     $username = "root";
     $password = "";
     $db = "store";
-
-    // Create connection
     $conn = new mysqli($host, $username, $password, $db);
 
-    // Check connection
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
@@ -40,7 +37,7 @@ $conn=db();
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            //
+            
             
             $is_admin = $row['IS_ADMIN'];
             session_start(); 
@@ -76,7 +73,6 @@ $conn=db();
         
     }
     
-    // Close the database connection
     $conn->close();
 
 
@@ -89,17 +85,13 @@ $conn=db();
     <title>ProFitFuel</title>
     <script src="https://kit.fontawesome.com/aafa25b911.js" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
-    <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
-    <!-- jQuery -->
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!-- Bootstrap JS (including Popper.js) -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 
     <link rel="stylesheet" href="./css/login.css">

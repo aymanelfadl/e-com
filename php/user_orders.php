@@ -16,7 +16,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
 }
 
-$sql = "SELECT * FROM orders WHERE id_user = '$userId' AND STATUS != 'Canceled'";
+$sql = "SELECT * FROM orders WHERE id_user = '$userId' AND STATUS != 'Cancelled'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

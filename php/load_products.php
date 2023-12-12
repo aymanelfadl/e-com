@@ -1,14 +1,11 @@
 <?php
 
 
-// Assuming you have the username stored in the session
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
     $username = 0;
 }
-
-// Retrieve the user ID based on the username
 $userQuery = "SELECT id FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query(db(), $userQuery);
 
@@ -53,7 +50,6 @@ if ($result && mysqli_num_rows($result) > 0) {
         <?php
         $count++;
 
-        // Start a new row after every fourth product
         if ($count % 4 === 0) {
             echo '</tr><tr>';
         }

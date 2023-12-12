@@ -4,9 +4,7 @@ include "./config.php";
 
 $conn = db();
 
-// Check if the request is a POST request
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Get user and product IDs from the POST data
     $userId = $_POST["userId"];
     $productId = $_POST["productId"];
     $decrement = isset($_POST["decrement"]) && $_POST["decrement"] === "true";
@@ -24,20 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         mysqli_stmt_close($stmt);
         
         if ($success) {
-            // Update successful
             echo "Quantity updated successfully!";
         } else {
-            // Update failed
             echo "Error updating quantity.";
         }
     } else {
-        // Statement preparation failed
         echo "Error preparing statement.";
     }
 
     mysqli_close($conn);
 } else {
-    // Invalid request method
     echo "Invalid request method.";
 }
 ?>

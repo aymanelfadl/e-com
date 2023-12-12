@@ -4,14 +4,12 @@ require "./php/config.php";
 session_start();
 $conn = db();
 
-// Check if the user is logged in
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
 } else {
     $username = 0;
 }
 
-// Retrieve user ID from the database
 $userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME     = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
@@ -21,25 +19,20 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $email = $userRow['EMAIL'];
 } 
 
-// Handle logout if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
-    // Destroy the session
     session_destroy();
 
-    // Optionally, redirect the user to another page after logout
-    header("Location: login.php"); // Change "index.php" to the desired page
+    header("Location: login.php");
     exit();
 }
 if (isset($_GET['id'])) {
     $productId = mysqli_real_escape_string($conn, $_GET['id']);
 
-    // Query to retrieve product details based on the product ID
     $productQuery ="SELECT p.*, c.Category_Name as category_name 
     FROM products p JOIN category c 
     ON p.id_category = c.id WHERE p.id = '$productId'";
     $productResult = mysqli_query($conn, $productQuery);
 
-    // Check if the query was successful and if a product was found
     if ($productResult && mysqli_num_rows($productResult) > 0) {
         $product = mysqli_fetch_assoc($productResult);
 
@@ -60,17 +53,13 @@ if (isset($_GET['id'])) {
 
           <script src="https://kit.fontawesome.com/aafa25b911.js" crossorigin="anonymous"></script>
 
-          <!-- Bootstrap CSS -->
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 
-          <!-- Font Awesome CSS -->
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 
-          <!-- jQuery -->
           
           <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-          <!-- Bootstrap JS (including Popper.js) -->
           <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
 
 
@@ -87,7 +76,6 @@ if (isset($_GET['id'])) {
 
 <header class="header" >
 
-<!-- Top Bar -->
 
 <div class="top_bar">
     <div class="container">
@@ -123,7 +111,6 @@ editProfileSection.style.display = 'block';
     </div>		
 </div>
 
-<!-- Header Main -->
 
 <div class="header_main">
     <div class="container">
@@ -178,7 +165,6 @@ editProfileSection.style.display = 'block';
     </div>
 </div>
 
-<!-- Main Navigation -->
 <div id="intro"><p>At <b>ProFitFuel</b>, we're dedicated to fueling your fitness journey with excellence. </p></div>
 <?php if ($username == 0): ?>
         <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
@@ -213,15 +199,12 @@ editProfileSection.style.display = 'block';
                         <div class="price-area my-4">
                             <p class="new-price text-bold mb-1"><b>Price:</b> <h5><?php echo $product['PRIX']; ?><b> MAD</b> </h5></p>
                         </div>
-
-                        <!-- Add more details here if needed -->
                         <div class="product-details my-4">
                             <p class="details-title text-color mb-1"><b>Product Details :</b></p>
                             <p class="description"><?php echo $product['DESCREPTION']; ?></p>
                         </div>
-                        <!-- ... -->
                         <div class="buttons d-flex my-5">
-        <button class="buyNowButton btn btn-primary" style="padding: 16px; width:300px;"
+      <button class="buyNowButton btn btn-primary" style="padding: 16px; width:300px;"
                 data-product-id="<?php echo $product['id']; ?>"
                 data-price="<?php echo $product['PRIX'];?>"
                 data-user-id="<?php echo $userId; ?>"
@@ -251,11 +234,9 @@ editProfileSection.style.display = 'block';
 
 <?php
     } else {
-        // Handle the case where no product was found
         echo "Product not found";
     }
 } else {
-    // Handle the case where the 'id' parameter is not set
     echo "Product ID not provided";
 }
 ?>
@@ -266,7 +247,6 @@ editProfileSection.style.display = 'block';
     
     <!-- Footer -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
-    <!-- Section: Social media -->
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
       <div >
         <a href="" class="me-4 text-reset">
@@ -288,18 +268,11 @@ editProfileSection.style.display = 'block';
           <i class="fab fa-github"></i>
         </a>
       </div>
-      <!-- Right -->
     </section>
-    <!-- Section: Social media -->
-
-    <!-- Section: Links  -->
     <section class="">
       <div class="container text-center text-md-start mt-5">
-        <!-- Grid row -->
         <div class="row mt-3">
-          <!-- Grid column -->
           <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-            <!-- Content -->
             <h6 class="text-uppercase fw-bold mb-4">
             <i class="fa-solid fa-dumbbell"></i> ProFitFuel   
             </h6>
@@ -307,11 +280,7 @@ editProfileSection.style.display = 'block';
                 ProFiFuel is dedicated to providing high-quality gym supplements to enhance your fitness journey
             </p>
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
           <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">
               Products
             </h6>
@@ -328,11 +297,7 @@ editProfileSection.style.display = 'block';
               <a href="#!" class="text-reset">Vitamins and Minerals</a>
             </p>
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
           <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-            <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">
               Links
             </h6>
@@ -349,11 +314,7 @@ editProfileSection.style.display = 'block';
               <a href="#!" class="text-reset">Help</a>
             </p>
           </div>
-          <!-- Grid column -->
-
-          <!-- Grid column -->
           <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-            <!-- Links -->
             <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
             <p><i class="fas fa-home me-3"></i> Sidi Bennoure, Fathe-10012, MR</p>
             <p>
@@ -362,21 +323,14 @@ editProfileSection.style.display = 'block';
             </p>
             <p><i class="fas fa-phone me-3"></i> + 212 64-277-6368</p>
           </div>
-          <!-- Grid column -->
         </div>
-        <!-- Grid row -->
       </div>
     </section>
-    <!-- Section: Links  -->
-
-    <!-- Copyright -->
     <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
       © 2023 Copyright:
       <a class="text-reset fw-bold" href="https://mdbootstrap.com/">ProFitFuel.com</a>
     </div>
-    <!-- Copyright -->
   </footer>
-  <!-- Footer -->
       
 </body>
 </html>
