@@ -16,7 +16,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
 }
 
-$sql = "SELECT * FROM orders WHERE id_user = $userId";
+$sql = "SELECT * FROM orders WHERE id_user = '$userId' AND STATUS != 'Canceled'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $rowColorClass = ($rowColorClass === 'even') ? 'odd' : 'even';
     
-        $deliveryDate = strtotime($row["diliverdate"]);
+        $deliveryDate = strtotime($row["dilivredate"]);
         $currentDate = strtotime(date("Y-m-d"));
     
         $action = '';
@@ -47,14 +47,17 @@ if ($result->num_rows > 0) {
             $confirmationMessage = "Are you sure you want to cancel this order?";
             $action = '<button class="btn btn-danger" onclick="showConfirmationDialog(\'Are you sure you want to cancel this order?\', ' . $row["id"] . ');">Cancel Order</button>';
         } else {
-            $action = '<button class="btn btn-warning" onclick="showFeedbackModal()">You Feedback</button>';
+            $action = '<button class="btn btn-warning" onclick="showFeedbackModal()">Your Feedback</button>';
+            $orderId = $row['id'];
+            $updateOrder = "UPDATE orders SET STATUS ='Completed' WHERE id= '$orderId'";
+            $r = $conn->query($updateOrder);
         }
         
         echo '<tr class="' . $rowColorClass . '">';
         echo '<td>' . $row["id"] . '</td>';
         echo '<td>' . $row["STATUS"] . '</td>';
         echo '<td>' . $row["ordate"] . '</td>';
-        echo '<td>' . $row["diliverdate"] . '</td>';
+        echo '<td>' . $row["dilivredate"] . '</td>';
         echo '<td>' . $action . '</td>';
         echo '</tr>';
     }
@@ -71,6 +74,6 @@ if ($result->num_rows > 0) {
 }
 
 
-// Close connection
+
 $conn->close();
 ?>

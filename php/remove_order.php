@@ -7,8 +7,8 @@ $conn = db();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $orderID = isset($_POST['orderID']) ? intval($_POST['orderID']) : 0;
-
-    $stmt = $conn->prepare("DELETE FROM orders WHERE id = ?");
+    $canceled = "Canceled";
+    $stmt = $conn->prepare("UPDATE orders SET STATUS ='$canceled' WHERE id= ?");
     $stmt->bind_param("i", $orderID);
 
     if ($stmt->execute()) {
