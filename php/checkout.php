@@ -47,13 +47,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail = new PHPMailer(true);
 
     try {
-        $stmt = $conn->prepare("SELECT EMAIL, USERNAME FROM users WHERE id = '$userId'");
+        $stmt = $conn->prepare("SELECT EMAIL, USERNAME FROM users WHERE id = ?");
+        $stmt->bind_param('i', $userId);
         $stmt->execute();
 
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 
         if ($user) {
+            $orderProductsQuery = "SELECT op.*, p.title, p.PRIX FROM order_product op
+            INNER JOIN products p ON op.id_product = p.id
+            WHERE op.id_order = ?";
+            $orderProductsStatement = $conn->prepare($orderProductsQuery);
+            $orderProductsStatement->bind_param('i', $orderId);
+            $orderProductsStatement->execute();
+            $orderProductsResult = $orderProductsStatement->get_result();
+
+            if ($orderProductsResult) {
+                $totalBill = 0;
+                $orderProducts = $orderProductsResult->fetch_all(MYSQLI_ASSOC);
+                foreach ($orderProducts as $product) {
+                    $totalBill += $product['quantity'] * $product['PRIX'];
+                }
             
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
@@ -73,17 +88,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
             $orderConfirmation = "
-                <p><strong>Dear {$user['USERNAME']},</strong></p>
-                
-                <p>Thank you for your order with ProFitFuel! Your order (ID: {$orderId}) has been successfully placed and processed.</p>
-                <p>Best regards,<b><br>ProFitFuel Team</b></p>
-            ";
-
-            $mail->Body    = $orderConfirmation;
+            <p><strong>Dear {$user['USERNAME']},</strong></p>
             
-            $mail->send();
-            echo 'Email sent successfully to ' . $user['EMAIL'];
-        } else {
+            <p>Thank you for your order with ProFitFuel! Your order (ID: {$orderId}) has been successfully placed and processed.</p>
+            
+            <p><strong>Order Details:</strong></p>
+            <ul>";
+        
+        foreach ($orderProducts as $product) {
+            $orderConfirmation .= "<li><b>{$product['title']}</b> - <b>Quantity:</b> {$product['quantity']} - <b>Price: </b>{$product['PRIX']}</li>";
+        }
+        $totalBill += 20;
+        $orderConfirmation .= "</ul>
+                              <p><strong>Total Bill: {$totalBill}</strong></p>
+                              <p>Best regards,<b><br>ProFitFuel Team</b></p>
+        ";
+
+        $mail->Body = $orderConfirmation;
+
+        $mail->send();
+        echo 'Email sent successfully to ' . $user['EMAIL'];
+    }
+        }
+        else {
             echo 'User not found.';
         }
     } catch (Exception $e) {
