@@ -212,8 +212,11 @@ function decrementCart(productId) {
             $searchResults.append(
                 '<td>' +
                 '<a href="product_page.php?id='+ products.id +'">'+
-                '<div class="card" data-price="' + products.PRIX + '">' +
-                '<img src="./product_images/'+products.image_file +'" alt="' + products.image_file + '" style="width:100%">' +
+                '<div class="card" data-price="' + products.PRIX + '" data-product-id="' + products.id + '" ' +
+                    'onmouseover="this.style.borderColor=\'#007bff\'; this.style.transform=\'scale(1.1)\';" ' +
+                    'onmouseout="this.style.borderColor=\'transparent\'; this.style.transform=\'scale(1)\';" ' +
+                    'style="border: 1px solid transparent; transition: border-color 0.4s ease-in-out; overflow: hidden;">' +
+                '<img src="./product_images/'+products.image_file +'" alt="' + products.image_file + '" style="width:75%">' +
                 '<h2>' + products.title + '</h2>' +
                 '<p class="Price"><b>' + products.PRIX + ' MAD</b></p>' +
                 '</a>'+
@@ -272,10 +275,11 @@ function updateSubtotal() {
         url: 'php/get_subtotal.php',
         method: 'POST', 
         success: function (response) {
-            var subtotal = parseFloat(response);
-            $('#totalValue').text(response );
-            $('#totalTax').text(response);
-            $('#subtotalValue').text(subtotal.toFixed(2) + ' MAD');
+            var numericResponse = parseFloat(response);
+            var subtotal = numericResponse;
+            var total = subtotal+20;
+            $('#totalValue').text(total.toFixed(2) + ' MAD');
+            $('#subtotalValue').text(subtotal.toFixed(2)+ ' MAD');
         },
         error: function (error) {
             console.error('Error updating subtotal:', error);

@@ -358,7 +358,7 @@ foreach ($cartResult as $row) {
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
                   <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
-"),2) ?> MAD</p>
+")) ?> MAD</p>
                 </div>
 
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
