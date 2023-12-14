@@ -18,6 +18,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 <link rel="icon" type="image/jpeg" href="../../../gym.jpeg"/>
 
 <meta charset="UTF-8">
@@ -152,6 +154,7 @@
                      ?>
 					
 <option  value="<?php echo $cate['Category_Name'] ?>"><?php echo $cate['Category_Name']  ?></option><?php }?>
+<option  value="ADD">Add A new Category</option>
 
 </select>
 <hr>
@@ -171,6 +174,84 @@
 </div>
 
 <script src="script.js"></script>
+
+
+<div  class="form-popup" id="Add_category">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 12L12 12M12 12L9 12M12 12L12 9M12 12L12 15" stroke="#43b179" stroke-width="1.5" stroke-linecap="round"></path> <path d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7" stroke="#43b179" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
+
+		<h1>Please Add a new Category</h1>
+		<input type="text" id="addedc">
+
+		<button id="addbttn">ADD</button>
+	</div>
+	<script>
+
+function insertBefore(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode);
+}
+	 var selecter = document.getElementById("products");
+	 var minipage = document.getElementById("Add_category");
+	 minipage.style.display='none';
+    selecter.addEventListener("change",function(){
+     if(selecter.value=="ADD"){
+	
+
+	 minipage.style.display='block';
+	 $('#test').css("filter", "blur(8px)");
+	 var addbttn = document.getElementById("addbttn");
+	 addbttn.addEventListener("click",function(){
+	
+		var addedcat = document.getElementById("addedc").value;
+
+		var data = new FormData();
+       data.append('cate', addedcat);
+	  
+
+	   fetch('addcategory.php', {
+  method: 'POST',
+  body: data
+})
+.then(response => {
+  if (response.ok) {
+    console.log('PHP script executed successfully');
+	var lastoption = selecter.lastElementChild;  
+var NewOption = document.createElement("option");
+NewOption.setAttribute("value", addedcat);
+NewOption.innerHTML = addedcat;  // Use 'innerHTML', lowercase 'H'
+
+insertBefore(NewOption, lastoption);
+
+var selectedIndex = selecter.options.length - 2;
+selecter.selectedIndex = selectedIndex;
+
+
+
+    // Handle the response if needed
+  } else {
+    throw new Error('Failed to execute PHP script');
+  }
+})
+.catch(error => {
+  console.error('There was a problem with the fetch operation:', error);
+});
+
+
+
+
+
+
+
+		minipage.style.display='none';
+		$('#test').css("filter", "blur(0px)");
+
+
+
+	 })
+
+	}
+
+    })
+</script>
 </body>
 </html>
 

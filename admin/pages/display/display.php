@@ -28,11 +28,12 @@ if (isset($_SESSION['username'])) {
     <link rel="stylesheet" href="../../style.css"> <!-- Link to your CSS file -->
      <!-- Link to your CSS file -->
 	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 
 </head>
 <body>
-  
+
   <div class="dashboard">
 	<aside class="search-wrap">
 		<div class="search">
@@ -119,7 +120,7 @@ if (isset($_SESSION['username'])) {
 	<div class="before_table">
 		
 	
-	<section class="main">
+	<section id="itstest" class="main">
       
       <div class="main-skills">
 	
@@ -187,7 +188,7 @@ LIMIT 1
 
 
    ?>
-<option  value="<?php echo $cate['Category_Name'] ?>"><?php echo $cate['Category_Name']  ?></option><?php }?>
+<option  value="<?php echo $cate['Category_name'] ?>"><?php echo $cate['Category_name']  ?></option><?php }?>
 
 </select>
 </center>
@@ -284,7 +285,7 @@ LIMIT 1
 
 
    ?>
-<option  value="<?php echo $cate['Category_Name'] ?>"><?php echo $cate['Category_Name']  ?></option><?php }}?>
+<option  value="<?php echo $cate['Category_name'] ?>"><?php echo $cate['Category_name']  ?></option><?php }}?>
   </select></div>
 	</center>
 	<hr>
@@ -320,18 +321,42 @@ LIMIT 1
 	<hr>
 	<br>
   
-    </div>
+    
+</div>
+	<div  class="form-popup" id="delete_confirmation">
+		<h1>Are you sure that you want to delete this Products</h1>
+
+		<button id="delete">Yes</button><button id="not_delete" >No</button>
+	</div>
+	<div  class="form-popup" id="Product_modified">
+		<i>
+		<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9 10L12.2581 12.4436C12.6766 12.7574 13.2662 12.6957 13.6107 12.3021L20 5" stroke="#448d75" stroke-linecap="round"></path> <path d="M21 12C21 13.8805 20.411 15.7137 19.3156 17.2423C18.2203 18.7709 16.6736 19.9179 14.893 20.5224C13.1123 21.1268 11.187 21.1583 9.38744 20.6125C7.58792 20.0666 6.00459 18.9707 4.85982 17.4789C3.71505 15.987 3.06635 14.174 3.00482 12.2945C2.94329 10.415 3.47203 8.56344 4.51677 6.99987C5.56152 5.4363 7.06979 4.23925 8.82975 3.57685C10.5897 2.91444 12.513 2.81996 14.3294 3.30667" stroke="#448d75" stroke-linecap="round"></path> </g></svg>
+		</i>
+
+		<h1>Your product details have been updated.</h1>
+
+		
+	</div>
 	<script>var popups = document.getElementsByClassName('form-popup');
 
 
 for (var i = 0; i < popups.length; i++) {
     popups[i].style.display = 'none';
-}</script>
+}
+
+
+
+
+
+
+
+</script>
 <script>
   function openForm(formId) {
     console.log(formId);
     var formElement = document.getElementById("form_product_" + formId);
     formElement.style.display = "block";
+
 
     var closeForm = function(event) {
       var targetElement = event.target; // Element that triggered the event
@@ -378,6 +403,11 @@ for (var i = 0; i < popups.length; i++) {
 </script>
 <script>
 	function deleteTr(id){
+		var  confirmation = document.getElementById("delete_confirmation");
+		confirmation.style.display = "block";
+
+		
+		document.getElementById("delete").addEventListener('click', function() {
 
 		console.log("function delete.tr called");
 		var element = document.getElementById('tr_product_'+id);
@@ -393,6 +423,7 @@ fetch('delete.php', {
   .then(response => {
     if (response.ok) {
       console.log('PHP script executed successfully');
+	  confirmation.style.display = "none";
       // Handle the response if needed
     } else {
       console.error('PHP script execution failed');
@@ -401,7 +432,12 @@ fetch('delete.php', {
   .catch(error => {
     console.error('There was a problem with the fetch operation:', error);
   });
+		})
+		document.getElementById("not_delete").addEventListener('click', function() {
+			confirmation.style.display = "none";
 
+
+		})
 
 	}
 </script>
@@ -446,7 +482,12 @@ if(formData.get('quantity')==0){
 else{
 	tr.setAttribute("class","");
 }
-alert("your product has ben changed succefully");
+var formElement = document.getElementById("form_product_" + productId);
+    formElement.style.display = "none";
+document.getElementById("Product_modified").style.display = "block";
+setTimeout(function() {
+    document.getElementById("Product_modified").style.display = "none";
+}, 2000);
 
             })
             .catch(error => {

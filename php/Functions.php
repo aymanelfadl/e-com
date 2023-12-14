@@ -209,7 +209,27 @@ function getAllCommandes(){
       $commands[] = $row;
    }}
    else{
-     $users=0;
+     $commands=0;
+   }
+   return $commands;
+
+}
+
+function getAllCommandesInThisWeek(){
+    $mysqli = connect();
+   $res = $mysqli->query("SELECT o.id, u.FN, u.LN, o.STATUS, o.ordate, o.dilivredate, io.icon
+   FROM orders o
+   JOIN users u ON o.id_user = u.id 
+   JOIN icon_order io ON o.STATUS = io.status
+   and  o.ordate >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+   ORDER BY o.id 
+    ");
+   if ($res->num_rows > 0){
+   while($row = $res->fetch_assoc()){
+      $commands[] = $row;
+   }}
+   else{
+     $commands=0;
    }
    return $commands;
 
@@ -274,5 +294,4 @@ function GetAllStatusCommands(){
 
 
 ?>
-
 
